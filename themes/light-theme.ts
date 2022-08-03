@@ -15,6 +15,7 @@ export const lightTheme = createTheme({
   components: {
     MuiLink: {
       defaultProps: {
+        color: 'black',
         underline: 'none',
       },
     },
@@ -57,6 +58,8 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
+          backgroundColor: 'white',
+          color: 'black',
           textTransform: 'none',
           boxShadow: 'none',
           borderRadius: 10,
