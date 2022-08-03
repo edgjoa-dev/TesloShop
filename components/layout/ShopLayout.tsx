@@ -29,7 +29,6 @@ export const ShopLayout:FC<Props> = ({ children, title, pageDescription, imageFu
 
             <nav>
                 <NavBar />
-                {/* TODO navbar */}
             </nav>
 
             <SideMenu />
