@@ -15,7 +15,7 @@ export const NavBar = () => {
 
                     {/* TODO Flex */}
                     <Box flex={1} />
-                    <Box>
+                    <Box sx={{ display:{xs:'none', sm:'block'} }} >
                         <NextLink href='/category/men' passHref>
                             <Link>
                                 <Button>Hombres</Button>
