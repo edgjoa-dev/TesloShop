@@ -2,6 +2,7 @@ import { ShopLayout } from '../../components/layout/ShopLayout';
 import { initialData } from '../../database/products';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { ProductsSlideshow } from '../../components/products';
+import { ItemCounter } from '../../components/ui';
 
 const product = initialData.products[0];
 
@@ -22,6 +23,7 @@ const ProductPage = () => {
 
                         <Box  sx={{my: 2}}>
                             <Typography variant='subtitle2' component='p' fontWeight={600}>Cantidad</Typography>
+                            <ItemCounter />
                             {/* item couter */}
                         </Box>
 
