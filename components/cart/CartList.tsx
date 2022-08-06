@@ -1,6 +1,7 @@
-import { Box, CardActionArea, CardMedia, Grid, Link, Typography } from '@mui/material';
+import { Box, Button, CardActionArea, CardMedia, Grid, Link, Typography } from '@mui/material';
 import { initialData } from '../../database/products';
 import NextLink from 'next/link';
+import { ItemCounter } from '../ui';
 
 
 const productsInCart= [
@@ -29,11 +30,22 @@ export const CartList = () => {
                                 </Link>
                             </NextLink>
                         </Grid>
+
                         <Grid item xs={7} sm={7}>
-
+                            <Box display='flex' flexDirection='column' >
+                                <Typography variant="body1">{product.title}</Typography>
+                                <Typography variant="body1">Talla: <strong>M</strong></Typography>
+                                {/* Condicional */}
+                                <ItemCounter />
+                            </Box>
                         </Grid>
-                        <Grid item xs={2} sm={2}>
 
+                        <Grid item xs={2} sm={2} display='flex' alignItems='center' flexDirection='column'>
+                            <Typography variant="subtitle1">${product.price}</Typography>
+                            {/* Editable */}
+                            <Button variant='text' color='error'>
+                                Remover
+                            </Button>
                         </Grid>
                     </Grid>
                 ))
