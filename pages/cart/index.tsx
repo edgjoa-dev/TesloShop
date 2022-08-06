@@ -4,14 +4,21 @@ import { CartList } from '../../components/cart';
 
 const CartPage = () => {
     return (
-        <ShopLayout title='Carrito de compra' pageDescription='Carito de compra de la tienda'>
-            <Typography variant='h1' component='h1'>Carito de Compras</Typography>
+
+    <ShopLayout title='Carrito de compra' pageDescription='Carito de compra de la tienda'>
+
+            <Typography variant='h1' component='h1'>Carrito de Compras</Typography>
+
             <Grid container>
+
                 <Grid item  xs={12} sm={7}>
-                <CartList />
+                    <CartList />
                 </Grid>
+
                 <Grid item  xs={12} sm={5}>
+
                     <Card  className='summary-card'>
+
                         <CardContent>
                             <Typography>Order</Typography>
                             <Divider sx={{ my:1 }} />
