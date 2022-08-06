@@ -14,15 +14,16 @@ const EmptyPage = () => {
                     height='calc(100vh - 200px)'
                     sx={{ flexDirection: {xs: 'column', sm: 'row'}}}
                 >
-                    <Typography sx={{ fontSize: 150,}}>
-                        <RemoveShoppingCartOutlined sx={{fontSize: 150}} />
-                    </Typography>
-                <Box display='flex' flexDirection='column' alignItems='center' >
-                    <Typography> Su carrito está vacío </Typography>
+                    <RemoveShoppingCartOutlined sx={{fontSize: 100}}/>
+                    <Typography fontSize={100} fontWeight={100}>|</Typography>
+
+                <Box display='flex' flexDirection='column' alignItems='center' sx={{ml: 3}}>
+                    <Typography variant="h6" component="h6"> Su carrito está vacío </Typography>
                     <NextLink href='/' passHref >
                         <Link typography='h6' color='secondary' > Regresar </Link>
                     </NextLink>
                 </Box>
+
             </Box>
         </ShopLayout>
     );
