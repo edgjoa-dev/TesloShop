@@ -1,4 +1,5 @@
-import { FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Box, display } from '@mui/system';
 import { ShopLayout } from '../../components/layout/ShopLayout';
 
 const AddressPage = () => {
@@ -8,7 +9,7 @@ const AddressPage = () => {
                 Dirección
             </Typography>
 
-            <Grid container spacing={ 2 }>
+            <Grid container spacing={ 2 } sx={{mt: 2}}>
                 <Grid item xs={12} sm={ 6 }>
                     <TextField label='Nombre' variant='filled' fullWidth/>
                 </Grid>
@@ -16,10 +17,10 @@ const AddressPage = () => {
                     <TextField label='Apellido' variant='filled' fullWidth/>
                 </Grid>
                 <Grid item xs={12} sm={ 6 }>
-                    <TextField label='Dirección' variant='filled' fullWidth/>
+                    <TextField label='Dirección (Calle y Número)' variant='filled' fullWidth/>
                 </Grid>
                 <Grid item xs={12} sm={ 6 }>
-                    <TextField label='Dirección 2 (opcional)' variant='filled' fullWidth/>
+                    <TextField label='Entre calles' variant='filled' fullWidth/>
                 </Grid>
                 <Grid item xs={12} sm={ 6 }>
                     <TextField label='Código Postal' variant='filled' fullWidth/>
@@ -29,7 +30,6 @@ const AddressPage = () => {
                 </Grid>
                 <Grid item xs={12} sm={ 6 }>
                     <FormControl  fullWidth>
-                        <InputLabel>País</InputLabel>
                         <Select
                             variant='filled'
                             label='País'
@@ -43,9 +43,17 @@ const AddressPage = () => {
                     </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={ 6 }>
-                    <TextField label='Ciudad' variant='filled' fullWidth/>
+                    <TextField label='Teléfono' variant='filled' fullWidth/>
                 </Grid>
             </Grid>
+
+            <Box sx={{ mt:5 }} display='flex' justifyContent='center'>
+                <Button color='primary' className='circular-btn' size='large'>
+                    Revisar Pedido
+                </Button>
+            </Box>
+
+
         </ShopLayout>
     )
 }
