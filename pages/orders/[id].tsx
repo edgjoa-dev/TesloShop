@@ -37,6 +37,22 @@ const [id] = () => {
                                 <Typography>Chalco, Edo. de Méx</Typography>
                                 <Typography>+52 5530921195</Typography>
 
+                                <Divider sx={{ my: 1 }} />
+                                <Box display='flex' justifyContent='space-between'>
+                                    <Typography variant='subtitle1'>Resumen de compra</Typography>
+                                    <NextLink href='/cart' passHref>
+                                        <Link>
+                                            Editar
+                                        </Link>
+                                    </NextLink>
+                                </Box>
+                                <OrderSummary />
+
+                            <Box  sx={{mt: 3}}>
+                                <Button color='secondary' className='circular-btn' fullWidth>
+                                    Confirmar Compra
+                                </Button>
+                            </Box>
 
                         </CardContent>
 
