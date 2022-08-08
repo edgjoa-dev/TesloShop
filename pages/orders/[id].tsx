@@ -1,8 +1,11 @@
+import { ShopLayout } from "../../components/layout"
 
 const [id] = () => {
-  return (
-    <div>[id]</div>
-  )
+    return (
+        <ShopLayout title='Resumen de Compra' pageDescription='Resumen de la compra'>
+    
+        </ShopLayout>
+    )
 }
 
 export default [id]
