@@ -1,12 +1,29 @@
 import { ShopLayout } from "../../components/layout"
-import { Box, Button, Card, CardContent, Divider, Grid, Link, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, Chip, Divider, Grid, Link, Typography } from '@mui/material';
 import { CartList, OrderSummary } from '../../components/cart';
 import NextLink from 'next/link';
+import { CreditCardOffOutlined, CreditScoreOutlined } from "@mui/icons-material";
 
-const [id] = () => {
+const OrderPage = () => {
     return (
-        <ShopLayout title='Resumen de Compra' pageDescription='Resumen de la compra'>
-            <Typography variant='h1' component='h1'>Resumen de Compra</Typography>
+        <ShopLayout title='Resumen de la compra' pageDescription='Resumen de la compra'>
+            <Typography variant='h1' component='h1'>Compra: ABC123456-A</Typography>
+
+            {/* <Chip
+                sx={{ my: 2 }}
+                label='Pendiente de Pago'
+                variant='outlined'
+                color='error'
+                icon={ <CreditCardOffOutlined /> }
+            /> */}
+
+            <Chip
+                sx={{ my: 2 }}
+                label='Pagado'
+                variant='outlined'
+                color='success'
+                icon={ <CreditScoreOutlined /> }
+            />
 
             <Grid container sx={{mt: 5}}>
 
@@ -49,9 +66,7 @@ const [id] = () => {
                                 <OrderSummary />
 
                             <Box  sx={{mt: 3}}>
-                                <Button color='secondary' className='circular-btn' fullWidth>
-                                    Confirmar Compra
-                                </Button>
+                                <h1>Pagar</h1>
                             </Box>
 
                         </CardContent>
@@ -63,4 +78,4 @@ const [id] = () => {
     )
 }
 
-export default [id]
+export default OrderPage;
