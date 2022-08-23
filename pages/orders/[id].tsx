@@ -68,6 +68,13 @@ const OrderPage = () => {
                             <Box  sx={{mt: 3}}>
                                 <h1>Pagar</h1>
                             </Box>
+                            <Chip
+                                sx={{ my: 2 }}
+                                label='Orden Pagada Correctamente'
+                                variant='outlined'
+                                color='success'
+                                icon={ <CreditScoreOutlined /> }
+                            />
 
                         </CardContent>
 
