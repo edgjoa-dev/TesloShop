@@ -16,7 +16,7 @@ const LoginPage = () => {
                     </Grid>
 
                     <Grid item xs={12}>
-                        <TextField label="Correo" variant='filled' fullWidth >
+                        <TextField label="Correo" variant='filled' autoFocus = { true } fullWidth >
                             Correo
                         </TextField>
                     </Grid>

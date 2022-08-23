@@ -11,8 +11,14 @@ const RegisterPage = () => {
                 <Grid container sx={{ gap: 3 }} >
                     <Grid item xs={12}>
                         <Typography variant='h1' component='h1' >
-                            Registro
+                            Crear Cuenta
                         </Typography>
+                    </Grid>
+
+                    <Grid item xs={12}>
+                        <TextField label="Nombre" variant='filled' autoFocus={true} fullWidth>
+                            Nombre Completo
+                        </TextField>
                     </Grid>
 
                     <Grid item xs={12}>
