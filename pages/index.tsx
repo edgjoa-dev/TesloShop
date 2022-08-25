@@ -1,33 +1,40 @@
 import type { NextPage } from 'next'
-import { Typography } from '@mui/material';
+
+
+import { Box, Typography } from '@mui/material';
+import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
 
 import { ShopLayout } from '../components/layout';
-import { initialData } from '../database/products';
 import { ProductList } from '../components/products/ProductList';
+import { useProducts } from '../hooks/useProducts';
 
 
-import useSWR from 'swr'
-const fetcher = (...args: [key: string]) => fetch(...args).then((res) => res.json())
+
 
 
 const Home: NextPage = () => {
 
-  const { data, error } = useSWR('/api/products', fetcher)
-
-  if (error) return <div>Failed to load</div>
-  if (!data) return <div>Loading...</div>
-
-  console.log({data});
-  
+  const { products, isLoading } = useProducts('/products');
 
   return (
     <ShopLayout title={'Teslo-Shop'} pageDescription={'Encuentra los mejores productos aquí'}>
       <Typography variant='h1' component='h1'>Tienda</Typography>
       <Typography variant='h2'  sx={{ mb: 1 }}>Todos los productos</Typography>
 
-      <ProductList
-        products={data}
-      />
+      {
+        isLoading
+        ?
+        <Stack spacing={1}>
+          <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3}} >
+          <Skeleton variant="rectangular" width={350} height={400} />
+          <Skeleton variant="rectangular" width={350} height={400} />
+          <Skeleton variant="rectangular" width={350} height={400} />
+          </Box>
+        </Stack>
+        : <ProductList products={products} />
+      }
 
     </ShopLayout>
   )
