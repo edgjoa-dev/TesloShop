@@ -5,6 +5,7 @@ type Data = {
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+
     switch (req.method) {
         case 'GET':
             return searchProducts(req, res)
@@ -26,6 +27,9 @@ function searchProducts(req: NextApiRequest, res: NextApiResponse<Data>) {
             message: 'Debe especificar el query de búsqueda.'
         });
     }
+
+
+    q = q.toString().toLowerCase();
 
     return res.status(200).json({
         message: q.toString()
