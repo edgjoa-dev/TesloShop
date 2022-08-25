@@ -70,10 +70,8 @@ const productSchema = new Schema({
 });
 
 // Crear indice
-// productSchema.methods.toJSON = function() {
-//     const { __v, ...data  } = this.toObject();
-//     return data;
-// }
+productSchema.index({title:'text', tags: 'text'});
+
 
 
 const Product: Model<IProducts> = mongoose.models.Product || model('Product', productSchema);
