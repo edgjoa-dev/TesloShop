@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 
 
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 
 
 import { ShopLayout } from '../components/layout';
