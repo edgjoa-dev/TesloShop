@@ -10,7 +10,11 @@ import { IProducts } from '../../interfaces';
 
 export const ProductCard:FC<ProductCardProps> = ({product}) => {
 
+
+
   const [isHovered, setisHovered] = useState(false)
+  const [isImageLoaded, setisImageLoaded] = useState(false)
+
 
   const productImage = useMemo( () => {
     return isHovered
@@ -26,22 +30,23 @@ export const ProductCard:FC<ProductCardProps> = ({product}) => {
       onMouseLeave={() => setisHovered(false)}
     >
         <Card>
-          <NextLink href="./product/slug" passHref prefetch={false}>
+          <NextLink href="/product/slug" passHref prefetch={false}>
             <Link>
               <CardActionArea>
                   <CardMedia
                       component='img'
                       image={productImage}
-                      alt={product.title}
+                      alt={product.slug}
+                      onLoad={()=> setisImageLoaded(true)}
                   />
               </CardActionArea>
             </Link>
           </NextLink>
         </Card>
 
-        <Box mt={2}>
-            <Typography fontWeight={800}>{product.title}</Typography>
-            <Typography fontWeight={400}>{`$${product.price}`}</Typography>
+        <Box sx={{ mt: 1, display: isImageLoaded ? 'block' : 'none' }} className='fadeIn'>
+            <Typography fontWeight={700}>{product.slug}</Typography>
+            <Typography fontWeight={500}>{`$${product.price}`}</Typography>
         </Box>
     </Grid>
   )
