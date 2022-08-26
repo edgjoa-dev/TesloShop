@@ -18,8 +18,8 @@ export const ProductCard:FC<ProductCardProps> = ({product}) => {
 
   const productImage = useMemo( () => {
     return isHovered
-    ? `products/${product.images[1] }`
-    : `products/${product.images[0] }`
+    ? `/products/${product.images[1] }`
+    : `/products/${product.images[0] }`
   }, [isHovered, product.images]);
 
   return (
@@ -36,7 +36,7 @@ export const ProductCard:FC<ProductCardProps> = ({product}) => {
                   <CardMedia
                       component='img'
                       image={productImage}
-                      alt={product.slug}
+                      alt={product.title}
                       onLoad={()=> setisImageLoaded(true)}
                   />
               </CardActionArea>
@@ -45,7 +45,7 @@ export const ProductCard:FC<ProductCardProps> = ({product}) => {
         </Card>
 
         <Box sx={{ mt: 1, display: isImageLoaded ? 'block' : 'none' }} className='fadeIn'>
-            <Typography fontWeight={700}>{product.slug}</Typography>
+            <Typography fontWeight={700}>{product.title}</Typography>
             <Typography fontWeight={500}>{`$${product.price}`}</Typography>
         </Box>
     </Grid>

@@ -13,9 +13,11 @@ import { FullScreenLoading } from '../components/ui';
 
 
 
-const Home: NextPage = () => {
+const HomePage: NextPage = () => {
 
   const { products, isLoading } = useProducts('/products');
+  console.log(products);
+
 
   return (
     <ShopLayout title={'Teslo-Shop'} pageDescription={'Encuentra los mejores productos aquí'}>
@@ -32,4 +34,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default HomePage;
