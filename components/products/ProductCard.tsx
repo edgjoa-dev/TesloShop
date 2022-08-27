@@ -10,11 +10,8 @@ import { IProducts } from '../../interfaces';
 
 export const ProductCard:FC<ProductCardProps> = ({product}) => {
 
-
-
   const [isHovered, setisHovered] = useState(false)
   const [isImageLoaded, setisImageLoaded] = useState(false)
-
 
   const productImage = useMemo( () => {
     return isHovered
