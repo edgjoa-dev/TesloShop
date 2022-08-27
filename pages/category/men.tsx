@@ -8,8 +8,6 @@ import { ProductList } from '../../components/products/ProductList';
 
 const MenPage: NextPage = () => {
   const { products, isLoading } = useProducts('/products?gender=men');
-  console.log(products);
-
 
   return (
     <ShopLayout title={'Teslo-Shop-Men´s'} pageDescription={'Encuentra los mejor ropa para hombres'}>

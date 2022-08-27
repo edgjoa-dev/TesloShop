@@ -8,8 +8,6 @@ import { ProductList } from '../../components/products/ProductList';
 
 const KidPage: NextPage = () => {
   const { products, isLoading } = useProducts('/products?gender=kid');
-  console.log(products);
-
 
   return (
     <ShopLayout title={'Teslo-Shop-kids'} pageDescription={'Encuentra los mejor ropa para niños'}>
