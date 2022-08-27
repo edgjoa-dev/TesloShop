@@ -1,79 +1,45 @@
 import mongoose, { Schema, model, Model } from 'mongoose';
-import { IProducts } from '../interfaces/products';
+import { IProducts } from '../interfaces';
 
-// description: string;
-// images: string[];
-// inStock: number;
-// price: number;
-// sizes: ValidSizes[];
-// slug: string;
-// tags: string[];
-// title: string;
-// type: ValidTypes;
-// gender: 'men'|'women'|'kid'|'unisex'
 
 const productSchema = new Schema({
-    description: {
-        type: String,
-        require: true,
-    },
-    images: [{
-        type: String,
-    }],
-    inStock: {
-        type: Number,
-        require: true,
-        default: 0,
-    },
-    price: {
-        type: Number,
-        require: true,
-        default: 0,
-    },
+    description: { type: String, required: true },
+    images: [{ type: String }],
+    inStock: { type: Number, required: true, default: 0 },
+    price: { type: Number, required: true, default: 0 },
     sizes: [{
         type: String,
         enum: {
             values: ['XS','S','M','L','XL','XXL','XXXL'],
-            message: '{VALUE} no es un tamaño válido',
-        },
-        required: true,
+            message: '{VALUE} no es un tamaño válido'
+        }
     }],
-    slug: {
-        type: String,
-        unique: true,
-        require: true,
-    },
-    tags: [{
-        type: String,
-    }],
-    title: {
-        type: String,
-        require: true,
-    },
+    slug: { type: String, required: true, unique: true },
+    tags: [{ type: String }],
+    title: { type: String, required: true },
     type: {
         type: String,
         enum: {
             values: ['shirts','pants','hoodies','hats'],
-            message: '{VALUE} no es un tipo válido',
-        },
+            message: '{VALUE} no es un tipo válido'
+        }
     },
     gender: {
         type: String,
         enum: {
             values: ['men','women','kid','unisex'],
-            message: '{VALUE} no es un género válido',
-        },
-    },
-
+            message: '{VALUE} no es un genero válido'
+        }
+    }
 },{
     timestamps: true
 });
 
-// Crear indice
-productSchema.index({title:'text', tags: 'text'});
+
+productSchema.index({ title: 'text', tags: 'text' });
 
 
+const Product: Model<IProducts> = mongoose.models.Product || model('Product', productSchema );
 
-const Product: Model<IProducts> = mongoose.models.Product || model('Product', productSchema);
 
 export default Product;

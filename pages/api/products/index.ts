@@ -19,13 +19,20 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
             return res.status(400).json({
                 message: 'Bad Request'
             })
+        }
     }
 
-}
+    const getProducts = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-const getProducts = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
+        const { gender = 'all' } = req.query;
+
+        let condition = {};
+
+        if ( gender !== 'all' && SHOP_CONSTANTS.validGenders.includes(`${gender}`) ) {
+            condition = { gender };
+        }
     await db.connect()
-    const products = await Product.find().lean();
+    const products = await Product.find().lean().select('title images price inStock slug gender -_id');
     await db.disconnect()
 
 
