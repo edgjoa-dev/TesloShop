@@ -1,17 +1,11 @@
 import type { NextPage } from 'next'
 
-
 import { Typography } from '@mui/material';
-
 
 import { ShopLayout } from '../components/layout';
 import { ProductList } from '../components/products/ProductList';
 import { useProducts } from '../hooks/useProducts';
 import { FullScreenLoading } from '../components/ui';
-
-
-
-
 
 const HomePage: NextPage = () => {
 
