@@ -14,12 +14,10 @@ function MyApp({ Component, pageProps }: AppProps) {
     }}
     >
       <UiProvider>
-
+        <ThemeProvider theme={lightTheme} >
+          <Component {...pageProps} />
+        </ThemeProvider>
       </UiProvider>
-      <ThemeProvider theme={lightTheme} >
-        <Component {...pageProps} />
-      </ThemeProvider>
-
     </SWRConfig>
   )
 }

@@ -2,10 +2,10 @@ import { createContext } from 'react'
 
 
 interface contextProps{
-    [key:string]: any
+    isMenuOpen: boolean;
 
     //method
-    togggleSideMenu: () => void;
+    toggleSideMenu: () => void;
 }
 
 
