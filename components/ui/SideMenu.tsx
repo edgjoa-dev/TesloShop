@@ -21,6 +21,7 @@ export const SideMenu = () => {
         open={ isMenuOpen }
         anchor='right'
         sx={{ backdropFilter: 'blur(4px)', transition: 'all 0.5s ease-out' }}
+        onClose={ toggleSideMenu }
     >
         <Box sx={{ width: 250, paddingTop: 5 }}>
 
