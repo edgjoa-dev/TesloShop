@@ -1,14 +1,20 @@
 import { ShopLayout } from '../../components/layout/ShopLayout';
-import { initialData } from '../../database/products';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { ProductsSlideshow, SizeSelector } from '../../components/products';
 import { ItemCounter } from '../../components/ui';
+import { IProducts } from '../../interfaces';
 // import { useRouter } from 'next/router';
 // import { useProducts } from '../../hooks';
+import { NextPage } from 'next';
 
-const product = initialData.products[0];
+interface Props {
+    product: IProducts
+}
 
-const ProductPage = () => {
+
+
+
+const ProductPage:NextPage<Props> = () => {
 
     // const router = useRouter();
     // const { products: product, isLoading } = useProducts(`/products/${router.query.slug}`);
