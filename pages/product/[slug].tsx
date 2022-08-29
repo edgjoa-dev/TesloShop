@@ -14,7 +14,7 @@ interface Props {
 
 
 
-const ProductPage:NextPage<Props> = () => {
+const ProductPage:NextPage<Props> = ({product}) => {
 
     // const router = useRouter();
     // const { products: product, isLoading } = useProducts(`/products/${router.query.slug}`);
@@ -61,5 +61,8 @@ const ProductPage:NextPage<Props> = () => {
         </ShopLayout>
     )
 }
+
+
+//getServerSideProps
 
 export default ProductPage;
