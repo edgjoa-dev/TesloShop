@@ -3,10 +3,16 @@ import { initialData } from '../../database/products';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { ProductsSlideshow, SizeSelector } from '../../components/products';
 import { ItemCounter } from '../../components/ui';
+// import { useRouter } from 'next/router';
+// import { useProducts } from '../../hooks';
 
 const product = initialData.products[0];
 
 const ProductPage = () => {
+
+    // const router = useRouter();
+    // const { products: product, isLoading } = useProducts(`/products/${router.query.slug}`);
+
     return (
         <ShopLayout title={product.title} pageDescription={product.description}>
             <Grid container spacing={3}>
