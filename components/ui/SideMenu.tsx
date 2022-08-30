@@ -46,7 +46,7 @@ export const SideMenu = () => {
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton
-                                    aria-label="toggle password visibility"
+                                    onClick = {onSearchTerm}
                                 >
                                     <SearchOutlined />
                                 </IconButton>
