@@ -3,12 +3,8 @@ import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { ProductsSlideshow, SizeSelector } from '../../components/products';
 import { ItemCounter } from '../../components/ui';
 import { IProducts } from '../../interfaces';
-// import { useRouter } from 'next/router';
-// import { useProducts } from '../../hooks';
-import { NextPage, GetServerSideProps } from 'next';
+import { NextPage,  GetStaticPaths, GetStaticProps  } from 'next';
 import { dbProducts } from '../../database';
-import { getProductBySlug } from '../../database/dbProducts';
-import { redirect } from 'next/dist/server/api-utils';
 
 interface Props {
     product: IProducts
@@ -66,26 +62,65 @@ const ProductPage:NextPage<Props> = ({product}) => {
 }
 
 
-//getServerSideProps
 
-export const getServerSideProps: GetServerSideProps = async ({params}) => {
+export const getStaticPaths: GetStaticPaths = async (ctx) => {
 
+    const productSlug = await dbProducts.getAllProductsBySlug();
+
+    return {
+        paths: productSlug.map( ({slug}) => ({
+            params: {
+                slug
+            }
+
+        })),
+
+        fallback: "blocking"
+    }
+}
+
+
+export const getStaticProps: GetStaticProps = async ({params}) => {
     const {slug = ''} = params as {slug: string};
     const product = await dbProducts.getProductBySlug(slug)
 
-    if(!product)
-        return {
-        redirect:{
-            destination: '/',
-            permanent: false
+        if(!product)
+            return {
+            redirect:{
+                destination: '/',
+                permanent: false
+            }
         }
-    }
+
 
     return {
         props: {
-            product
+
         }
     }
 }
+
+
+//getServerSideProps
+
+// export const getServerSideProps: GetServerSideProps = async ({params}) => {
+
+//     const {slug = ''} = params as {slug: string};
+//     const product = await dbProducts.getProductBySlug(slug)
+
+//     if(!product)
+//         return {
+//         redirect:{
+//             destination: '/',
+//             permanent: false
+//         }
+//     }
+
+//     return {
+//         props: {
+//             product
+//         }
+//     }
+// }
 
 export default ProductPage;
