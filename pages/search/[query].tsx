@@ -1,4 +1,4 @@
-import type { NextPage } from 'next'
+import type { NextPage, GetServerSideProps } from 'next'
 
 import { Typography } from '@mui/material';
 
@@ -9,7 +9,7 @@ import { FullScreenLoading } from '../../components/ui';
 
 const SearchPage: NextPage = () => {
 
-    const { products, isLoading } = useProducts('/products');
+    const { products, isLoading } = useProducts('/search/');
     console.log(products);
 
 
@@ -27,5 +27,28 @@ const SearchPage: NextPage = () => {
         </ShopLayout>
     )
     }
+
+export const getServerSideProps: GetServerSideProps = async ({params}) => {
+    const { query = '' } = params as { query: string }
+
+    if(query.length === 0){
+        return {
+            redirect: {
+                destination: '/',
+                permanent: true
+            }
+        }
+    }
+
+
+
+    return {
+        props: {
+            query
+        }
+    }
+
+
+}
 
 export default SearchPage;
