@@ -16,5 +16,4 @@ export const getProductBySlug = async( slug: string): Promise<IProducts | null> 
     }
 
     return JSON.parse(JSON.stringify(product));
-
 }
