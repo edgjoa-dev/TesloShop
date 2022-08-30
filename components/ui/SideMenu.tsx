@@ -14,10 +14,6 @@ export const SideMenu = () => {
 
     const [searchTerm, setSearchTerm] = useState('')
 
-    const asideSearchTerm = (e: any) => {
-        setSearchTerm(e.target.value)
-    }
-
     const onSearchTerm = () => {
         if( searchTerm.trim().length === 0 ) return;
         navigateTo(`/search/${searchTerm}`)
@@ -43,8 +39,8 @@ export const SideMenu = () => {
                 <ListItem>
                     <Input
                         value={searchTerm}
-                        onChange={ asideSearchTerm }
-                        onKeyPress={ (e)=> e.key === 'Enter' ? onSearchTerm : null}
+                        onChange={ (e) => setSearchTerm(e.target.value) }
+                        onKeyPress={ (e) => e.key === 'Enter' ? onSearchTerm() : null}
                         type='text'
                         placeholder="Buscar..."
                         endAdornment={
