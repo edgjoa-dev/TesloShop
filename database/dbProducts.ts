@@ -31,3 +31,18 @@ export const getAllProductsBySlug = async() => {
     return slug;
 
 }
+export const getProductsByTerm = async( term:string ) => {
+
+    term = term.toString().toLowerCase();
+
+    await db.connect()
+    const slug = await Product.find({
+        $text: { $search: term }
+    })
+    .select('title images price inStock -_id')
+    .lean();
+    await db.disconnect()
+
+    return term;
+
+}
