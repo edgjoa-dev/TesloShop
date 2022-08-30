@@ -3,14 +3,17 @@ import type { NextPage, GetServerSideProps } from 'next'
 import { Typography } from '@mui/material';
 
 import { ShopLayout } from '../../components/layout';
+import { dbProducts } from '../../database';
+import { IProducts } from '../../interfaces';
 import { ProductList } from '../../components/products/ProductList';
-import { useProducts } from '../../hooks/useProducts';
-import { FullScreenLoading } from '../../components/ui';
 
-const SearchPage: NextPage = () => {
+interface Props {
+    products: IProducts[];
+}
 
-    const { products, isLoading } = useProducts('/search/');
-    console.log(products);
+
+
+const SearchPage: NextPage<Props> = ({ products }) => {
 
 
     return (
@@ -18,12 +21,7 @@ const SearchPage: NextPage = () => {
         <Typography variant='h1' component='h1'>Buscar Productos</Typography>
         <Typography variant='h2'  sx={{ mb: 1 }}>ABC--123</Typography>
 
-        {
-            isLoading
-            ? <FullScreenLoading />
-            : <ProductList products={products} />
-        }
-
+        <ProductList products={products} />
         </ShopLayout>
     )
     }
@@ -40,11 +38,11 @@ export const getServerSideProps: GetServerSideProps = async ({params}) => {
         }
     }
 
-
+    let products = await dbProducts.getProductsByTerm(query);
 
     return {
         props: {
-            query
+            products
         }
     }
 
