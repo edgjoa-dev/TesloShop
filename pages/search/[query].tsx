@@ -23,11 +23,17 @@ const SearchPage: NextPage<Props> = ({ products, foundProducts, query }) => {
         <Typography variant='h1' component='h1'>Buscar Productos</Typography>
         {
             foundProducts
-            ?<Typography variant='h2'  sx={{ mb: 1 }}> {query} </Typography>
+            ?(
+            <Box display= 'flex'>
+                <Typography variant='h2' sx={{ mb: 1 }}> Búsqueda: </Typography>
+                <Typography variant='h2' sx={{ ml: 1 }} color='error' textTransform='capitalize'> {query} </Typography>
+            </Box>
+            )
+
             :(
                 <Box display='flex'>
                     <Typography variant='h2'  sx={{ mb: 1 }}> No se encontraron productos con: </Typography>
-                    <Typography variant='h2'  sx={{ ml: 1 }} color='InfoText'> {query} </Typography>
+                    <Typography variant='h2'  sx={{ ml: 1 }} color='error' textTransform='capitalize'> {query} </Typography>
                 </Box>
             )
         }

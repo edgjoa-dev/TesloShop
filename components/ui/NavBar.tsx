@@ -43,7 +43,16 @@ export const NavBar = () => {
                     </Box>
 
                     <Box flex={1} />
-                    <IconButton>
+                    {/* pantallas grandes */}
+                    {/* <IconButton>
+                        <SearchOutlined />
+                    </IconButton> */}
+
+                    {/* pantallas pequeñas */}
+                    <IconButton
+                        sx={{ display:{xs: 'flex', sm: 'none' } }}
+                        onClick={ toggleSideMenu }
+                    >
                         <SearchOutlined />
                     </IconButton>
 
