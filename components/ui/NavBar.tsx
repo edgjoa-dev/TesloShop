@@ -31,7 +31,7 @@ export const NavBar = () => {
 
                     {/* TODO Flex */}
                     <Box flex={1} />
-                    <Box sx={{ display:{xs:'none', sm:'block'} }} >
+                    <Box sx={{ display: isSearchVisible ? 'none' : {xs: 'none', sm: 'block'} }} >
                         <NextLink href='/category/men' passHref>
                             <Link>
                                 <Button color={ asPath === '/category/men' ? 'primary' : 'info'} >Hombres</Button>
@@ -58,6 +58,7 @@ export const NavBar = () => {
                         isSearchVisible
                         ? (
                             <Input
+                                sx={{ display: {xs:'none', sm:'flex'} }}
                                 className='fadeIn'
                                 autoFocus
                                 value={searchTerm}
@@ -78,8 +79,9 @@ export const NavBar = () => {
                         )
                         : (
                             <IconButton
-                            className='fadeIn'
                                 onClick={ () => setIsSearchVisible(true) }
+                                className='fadeIn'
+                                sx={{ display:{xs: 'none', sm: 'flex' } }}
                             >
                                 <SearchOutlined />
                             </IconButton>
