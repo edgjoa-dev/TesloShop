@@ -11,13 +11,13 @@ type Props = {
 }
 
 
-const Cart_INITIAL_STATE: CartState = {
+const CART_INITIAL_STATE: CartState = {
     cart: []
 }
 
 export const CartProvider:FC<Props> = ({ children }) => {
 
-const [state, dispatch] = useReducer( cartReducer, Cart_INITIAL_STATE );
+const [state, dispatch] = useReducer( cartReducer, CART_INITIAL_STATE );
 
 return(
 <CartContext.Provider value={{
