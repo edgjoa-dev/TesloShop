@@ -1,4 +1,4 @@
 
-export * from '/CartContext';
-export * from '/CarProvider';
-export * from '/cartReducer';
+export * from './CartContext';
+export * from './CartProvider';
+export * from './cartReducer';
