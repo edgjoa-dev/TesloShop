@@ -42,12 +42,12 @@ const ProductPage:NextPage<Props> = ({product}) => {
                             {/* item couter */}
                         </Box>
 
-                        {/* Agregar al carrito */}
-                        <Button color='secondary' className='circular-btn'>
-                            Agregar al carrito
-                        </Button>
-
-                        {/* <Chip label='Soldout' color='error' variant='outlined' /> */}
+                        {
+                            ( product.inStock > 0 )
+                            // {/* Agregar al carrito */}
+                            ?(<Button color='secondary' className='circular-btn'> Agregar al carrito </Button>)
+                            :(<Chip label='Articulo Agotado' color='error' variant='outlined' />)
+                        }
 
                         {/* descrpcion del producto */}
                         <Box  sx={{ mt: 3 }}>
