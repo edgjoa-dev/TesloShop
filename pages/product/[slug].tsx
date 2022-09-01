@@ -2,9 +2,10 @@ import { ShopLayout } from '../../components/layout/ShopLayout';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { ProductsSlideshow, SizeSelector } from '../../components/products';
 import { ItemCounter } from '../../components/ui';
-import { IProducts } from '../../interfaces';
+import { ICartProduct, IProducts } from '../../interfaces';
 import { NextPage,  GetStaticPaths, GetStaticProps  } from 'next';
 import { dbProducts } from '../../database';
+import { useState } from 'react';
 
 interface Props {
     product: IProducts
@@ -15,8 +16,16 @@ interface Props {
 
 const ProductPage:NextPage<Props> = ({product}) => {
 
-    // const router = useRouter();
-    // const { products: product, isLoading } = useProducts(`/products/${router.query.slug}`);
+    const [tempCartProduct, settempCartProduct] = useState<ICartProduct>({
+        _id: product._id,
+        image: product.images[0],
+        price: product.price,
+        size: undefined,
+        slug: product.slug,
+        title: product.title,
+        gender: product.gender,
+        quantity: 1,
+    })
 
     return (
         <ShopLayout title={product.title} pageDescription={product.description}>
