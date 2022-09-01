@@ -2,10 +2,10 @@ import { ShopLayout } from '../../components/layout/ShopLayout';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { ProductsSlideshow, SizeSelector } from '../../components/products';
 import { ItemCounter } from '../../components/ui';
-import { ICartProduct, IProducts } from '../../interfaces';
+import { ICartProduct, IProducts, ISize } from '../../interfaces';
 import { NextPage,  GetStaticPaths, GetStaticProps  } from 'next';
 import { dbProducts } from '../../database';
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 
 interface Props {
     product: IProducts
@@ -16,7 +16,7 @@ interface Props {
 
 const ProductPage:NextPage<Props> = ({product}) => {
 
-    const [tempCartProduct, settempCartProduct] = useState<ICartProduct>({
+    const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
         _id: product._id,
         image: product.images[0],
         price: product.price,
@@ -26,6 +26,13 @@ const ProductPage:NextPage<Props> = ({product}) => {
         gender: product.gender,
         quantity: 1,
     })
+
+    const selectedSize = ( size: ISize ) => {
+        setTempCartProduct( currentProduct =>({
+            ...currentProduct,
+            size
+        }))
+    }
 
     return (
         <ShopLayout title={product.title} pageDescription={product.description}>
@@ -44,17 +51,26 @@ const ProductPage:NextPage<Props> = ({product}) => {
                         <Box  sx={{my: 2}}>
                             <Typography variant='subtitle2' component='p' fontWeight={600}>Cantidad</Typography>
                             <ItemCounter />
+
                             <SizeSelector
-                                // selectedSizes={product.sizes[0]}
-                                sizes={product.sizes}
+                                sizes = { product.sizes }
+                                selectedSizes = { tempCartProduct.size}
+                                onSelectedSize={selectedSize}
                             />
                             {/* item couter */}
                         </Box>
 
+                        {/* Agregar al carrito */}
                         {
                             ( product.inStock > 0 )
-                            // {/* Agregar al carrito */}
-                            ?(<Button color='secondary' className='circular-btn'> Agregar al carrito </Button>)
+                            ?(
+                                <Button color='secondary' className='circular-btn'>
+                                    {
+                                        tempCartProduct.size
+                                        ? 'Agregar producto'
+                                        : 'Seleccione un talla'
+                                    }
+                                </Button>)
                             :(<Chip label='Articulo Agotado' color='error' variant='outlined' />)
                         }
 
