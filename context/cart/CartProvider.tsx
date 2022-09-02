@@ -1,4 +1,5 @@
-import { FC, useReducer } from 'react';
+import { FC, useEffect, useReducer } from 'react';
+import Cookie from 'js-cookie'
 import { ICartProduct } from '../../interfaces';
 import {  CartContext, cartReducer } from './';
 
@@ -16,7 +17,12 @@ const CART_INITIAL_STATE: CartState = {
 
 export const CartProvider:FC<Props> = ({ children }) => {
 
-const [state, dispatch] = useReducer( cartReducer, CART_INITIAL_STATE );
+    const [state, dispatch] = useReducer( cartReducer, CART_INITIAL_STATE );
+
+    useEffect(() => {
+        Cookie.set('cart', JSON.stringify(state.cart))
+    }, [state.cart])
+
 
     const addProductToCart = ( product: ICartProduct ) => {
 
@@ -32,9 +38,10 @@ const [state, dispatch] = useReducer( cartReducer, CART_INITIAL_STATE );
             if(p.size !== product.size) return p;
 
             //Actualizar la cantidad
-            p.quantity += product.quantity
+            p.quantity += product.quantity;
             return p;
         });
+
         dispatch( { type: '[Cart] - Updte products in cart', payload: updatedProducts });
     }
 
