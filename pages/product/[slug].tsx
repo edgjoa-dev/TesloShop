@@ -5,7 +5,7 @@ import { ItemCounter } from '../../components/ui';
 import { ICartProduct, IProducts, ISize } from '../../interfaces';
 import { NextPage,  GetStaticPaths, GetStaticProps  } from 'next';
 import { dbProducts } from '../../database';
-import { SetStateAction, useState } from 'react';
+import { useState } from 'react';
 
 interface Props {
     product: IProducts
@@ -24,13 +24,19 @@ const ProductPage:NextPage<Props> = ({product}) => {
         slug: product.slug,
         title: product.title,
         gender: product.gender,
-        quantity: 1,
+        quantity: 2,
     })
 
     const selectedSize = ( size: ISize ) => {
         setTempCartProduct( currentProduct =>({
             ...currentProduct,
             size
+        }))
+    }
+    const onUpdteQuantity = ( quantity: number ) => {
+        setTempCartProduct( currentProduct =>({
+            ...currentProduct,
+            quantity
         }))
     }
 
@@ -50,7 +56,12 @@ const ProductPage:NextPage<Props> = ({product}) => {
 
                         <Box  sx={{my: 2}}>
                             <Typography variant='subtitle2' component='p' fontWeight={600}>Cantidad</Typography>
-                            <ItemCounter />
+                            {product.inStock}
+                            <ItemCounter
+                                currentValue = { tempCartProduct.quantity }
+                                updatedQuantity = { onUpdteQuantity }
+                                maxValue = {  product.inStock > 5 ? 5 : product.inStock }
+                            />
 
                             <SizeSelector
                                 sizes = { product.sizes }
