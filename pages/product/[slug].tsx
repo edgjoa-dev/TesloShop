@@ -5,8 +5,9 @@ import { ItemCounter } from '../../components/ui';
 import { ICartProduct, IProducts, ISize } from '../../interfaces';
 import { NextPage,  GetStaticPaths, GetStaticProps  } from 'next';
 import { dbProducts } from '../../database';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useRouter } from 'next/router';
+import { CartContext } from '../../context';
 
 interface Props {
     product: IProducts
@@ -18,6 +19,7 @@ interface Props {
 const ProductPage:NextPage<Props> = ({product}) => {
 
     const router = useRouter()
+    const { addProductToCart } = useContext(CartContext)
 
     const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
         _id: product._id,
@@ -48,7 +50,7 @@ const ProductPage:NextPage<Props> = ({product}) => {
         if( !tempCartProduct.size ){return};
 
         //llamar la accion del context para agregar al carrito
-
+        addProductToCart(tempCartProduct);
         router.push('/cart')
     }
 
