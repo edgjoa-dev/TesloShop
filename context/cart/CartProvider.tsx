@@ -1,4 +1,5 @@
-import { FC, useReducer } from 'react';
+import { FC, useReducer, useEffect } from 'react';
+import Cookies from 'js-cookie'
 import { ICartProduct } from '../../interfaces';
 import {  CartContext, cartReducer } from './';
 
@@ -17,7 +18,12 @@ const CART_INITIAL_STATE: CartState = {
 
 export const CartProvider:FC<Props> = ({ children }) => {
 
-const [state, dispatch] = useReducer( cartReducer, CART_INITIAL_STATE );
+    const [state, dispatch] = useReducer( cartReducer, CART_INITIAL_STATE );
+
+    useEffect(()=>{
+    
+    },[])
+
 
 const addProductToCart = ( product: ICartProduct ) => {
 
