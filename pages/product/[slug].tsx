@@ -7,10 +7,6 @@ import { ProductsSlideshow, SizeSelector } from '../../components/products';
 import { ItemCounter } from '../../components/ui';
 import { ICartProduct, IProducts, ISize } from '../../interfaces';
 import { dbProducts } from '../../database';
-<<<<<<< HEAD
-=======
-import { useState, useContext } from 'react';
->>>>>>> f7ae69cd30712e90ca09dfa9a68975c191c225b9
 import { useRouter } from 'next/router';
 import { CartContext } from '../../context';
 
@@ -23,11 +19,7 @@ interface Props {
 
 const ProductPage:NextPage<Props> = ({product}) => {
 
-<<<<<<< HEAD
     const router = useRouter();
-=======
-    const router = useRouter()
->>>>>>> f7ae69cd30712e90ca09dfa9a68975c191c225b9
     const { addProductToCart } = useContext(CartContext)
 
     const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
@@ -47,7 +39,6 @@ const ProductPage:NextPage<Props> = ({product}) => {
             size
         }))
     }
-
     const onUpdteQuantity = ( quantity: number ) => {
         setTempCartProduct( currentProduct =>({
             ...currentProduct,
@@ -55,7 +46,6 @@ const ProductPage:NextPage<Props> = ({product}) => {
         }))
     }
 
-<<<<<<< HEAD
     const onAddProduct = () => {
         if(!tempCartProduct.size) {return};
 
@@ -63,13 +53,6 @@ const ProductPage:NextPage<Props> = ({product}) => {
         addProductToCart(tempCartProduct)
         console.log(tempCartProduct)
 
-=======
-    const onAddProduct = ( quantity: number ) => {
-        if( !tempCartProduct.size ){return};
-
-        //llamar la accion del context para agregar al carrito
-        addProductToCart(tempCartProduct);
->>>>>>> f7ae69cd30712e90ca09dfa9a68975c191c225b9
         router.push('/cart')
     }
 
@@ -108,15 +91,9 @@ const ProductPage:NextPage<Props> = ({product}) => {
                             ( product.inStock > 0 )
                             ?(
                                 <Button
-<<<<<<< HEAD
                                 color='secondary'
                                 className='circular-btn'
                                 onClick={onAddProduct}
-=======
-                                    color='secondary'
-                                    className='circular-btn'
-                                    onClick={onAddProduct}
->>>>>>> f7ae69cd30712e90ca09dfa9a68975c191c225b9
                                 >
                                     {
                                         tempCartProduct.size

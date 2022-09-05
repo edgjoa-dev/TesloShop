@@ -1,0 +1,97 @@
+[33mf7ae69c[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m cambiar
+[33me0fe167[m Carrito de compras
+[33mf01bf93[m Cookies en carrito
+[33mff894f1[m Editar numero de productos en pageCart
+[33m9235b51[m agregar vista de producto a pagina de carrito de compra
+[33mc1fc5dd[m agregar al carrito cookies
+[33m1906428[m agregar al carrito cookies
+[33m53f623b[m agregar al carrito
+[33m9609bff[m actualizar productos en carrito
+[33m280e73b[m Iniciar Agregar carrito de compras
+[33m37b7d2d[m Agregar numero de productos
+[33m9d95ce6[m Seleccionar una talla
+[33m1534062[m agregar estado con arreglo de productos
+[33me9779b6[m Implementar CartProvider en _app.tsx
+[33mb2f6898[m Implementar CartProvider en _app.tsx
+[33m5b35d96[m Creando cart context e interfaces
+[33m1f35ee9[m Creando cart context e interfaces
+[33m0a99194[m Boton de busqueda ambas pantallas ok
+[33mb4a7a0c[m Bpton de busqueda pantallas grandes
+[33mb333b71[m Bpton de busqueda pantallas pequeñas
+[33mae77f96[m Busqueda por query en aside
+[33m9f6b2a3[m Busqueda por SSR implementada
+[33m8db7388[m Agregar funcion obtener productos por palabra
+[33m3e5f3b6[m Agregar funcion obtener productos por palabra
+[33mf19ef60[m Agregar pagina de busqueda con icono
+[33m1e813ab[m Agraagar pagina de busqueda en asidemenu
+[33me591d44[m Agraagar pagina de busqueda
+[33m325afe0[m gettingPaths y Props implementado
+[33m67efbd8[m gettingPaths y Props
+[33m57e5e9f[m gettingPaths y Props
+[33mb16ad29[m Mostrar producto en pantalla de producto en especifico
+[33mff48b78[m Configuracion de getProduct en DB
+[33m6d8d7e0[m Configuracion interface props
+[33mdb7a380[m Configuracion inicial pantalla de producto
+[33mf04cd13[m Configuracion inicial pantalla de producto
+[33mc59a02c[m cerrar sideMenu
+[33m0659e5c[m Mostrar sideMenu
+[33m6a9b18a[m Ui Reducer, Context, Provider
+[33m70a163f[m Mostrar pagina activa
+[33m682f30a[m Product card
+[33m6d4cefd[m Busqueda de query por slug
+[33mcdf532a[m Mostrar pantallas Hombre Mujeres y Niños
+[33m9ce6b59[m Mostrar productos
+[33m6b0588a[m Mostrar productos
+[33m0c2883e[m Pantallas por menu
+[33me2abf60[m Creacionde pantallas hombres, mujeres y niños
+[33m79d5b1a[m Mostrar textos al cargar
+[33m0fe2517[m Pantalla de carga Loading
+[33m9bf7dc1[m Custom hoooks y configuracion de global SWR
+[33m93fccc1[m Custom hoooks
+[33md6f56f8[m Implementacion de SWR para peticiones http en Next
+[33m3e1d6bd[m Búsqueda por query ok
+[33maea4df0[m Cúsqueda por query ok
+[33m7ee13ff[m Manejo de búsqueda con query validacion si no hay termino
+[33m15840f9[m Busqueda por queries implementado
+[33mf827111[m Obtener todos los productos
+[33mb65c661[m Agregar createdAT y updatedAT
+[33m2380a77[m Conexión a la base de datos en mongo
+[33m6d6745b[m Creacionde conexión a base de datos y creacion de ProductSchema con mongoose
+[33mcb71613[m Creacion paginas de Registro e Inicio de sesión
+[33m3b6c64b[m Creacion paginas de Registro e Inicio de sesión
+[33mdf2e739[m Historial de ordenes y Pagina de pagos
+[33m2b4e8f7[m Implementación de Chip en OrderPage
+[33m710f92f[m agregando resumen a CardOrder
+[33mb22381a[m Agregando contenido a Card
+[33m92d3b91[m Agregando Card
+[33m2248cdf[m Agregando ShopLlayout
+[33m2879ac8[m Agregando OrderPage
+[33m7c7fbd0[m Creacion de Checkout/summary card resumen de compra
+[33me640608[m Corrección de imagenes en ResumenPage
+[33m5975d69[m Creando ResumenPage
+[33m5816403[m Terminando formulario de Checkout
+[33m63889b6[m Agregando campos al formulario de Checkout
+[33mffa2bb5[m Creacion de CheckoutPage
+[33m3403f12[m Editable en en componente CartList
+[33m67fe17e[m Adicion de card Order en carrito de compras
+[33me568277[m Mostrar articulos en carrito de compras
+[33mc2af54a[m Mostrar cards en carrito de compras
+[33ma76a86d[m Agregando pagina de Cart
+[33ma0b7a9e[m Agregando pantalla Carrito vacío
+[33m9d417a6[m Agregando selector de tallas
+[33m2e890d5[m Agregando counter en pageproduct
+[33m6aa18e7[m Implementación de SlideShow
+[33m4cbb9c5[m Mostrar información de producto seleccionado
+[33m4a42b57[m Cambio de image isHover en ProductCard
+[33m2f721a9[m Renderizar ProductList en index
+[33m727490a[m Renderizar ProductList en index
+[33md2e2ffd[m Agregar componente List y Card para mostrar productos
+[33m360a2df[m implementación de sidebar
+[33m32b27ab[m implementación catalogo
+[33mfbcbfac[m Implementación de page error 404
+[33m020c3e9[m Implementación responsive de NavBar
+[33mb8c9944[m Implementación de NavBar
+[33m7821c45[m Add estructura de App carpetas
+[33m7a30c72[m Add carpetas database themes styles public
+[33mf864291[m First commit
+[33m41962c8[m Initial commit from Create Next App
