@@ -21,8 +21,8 @@ export const CartProvider:FC<Props> = ({ children }) => {
     const [state, dispatch] = useReducer( cartReducer, CART_INITIAL_STATE );
 
     useEffect(()=>{
-    
-    },[])
+    Cookies.set( 'cart', JSON.stringify(state.cart) );
+    },[state.cart])
 
 
 const addProductToCart = ( product: ICartProduct ) => {
