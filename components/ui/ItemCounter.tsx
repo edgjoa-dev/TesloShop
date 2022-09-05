@@ -27,7 +27,7 @@ export const ItemCounter: FC<ItemCounterProps> = ({ currentValue, maxValue, upda
     return (
         <Box display='flex' alignItems='center'>
             <IconButton
-                onClick= { () => addOrRemove(-1) }
+                onClick= { () => addOrRemove(- 1) }
             >
                 <RemoveCircleOutline />
             </IconButton>
@@ -35,7 +35,7 @@ export const ItemCounter: FC<ItemCounterProps> = ({ currentValue, maxValue, upda
             <Typography sx={{ width: 40, textAlign:'center' }}> {currentValue} </Typography>
 
             <IconButton
-                onClick= { () => addOrRemove( +1 ) }
+                onClick= { () => addOrRemove( + 1 ) }
             >
                 <AddCircleOutline />
             </IconButton>

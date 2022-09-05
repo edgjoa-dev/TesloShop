@@ -1,6 +1,6 @@
 import { ItemCounter } from '../ui';
 import NextLink from 'next/link';
-import { Box, Button, CardActionArea, CardMedia, Grid, Link, Typography } from '@mui/material';
+import { Box, Button, CardActionArea, CardMedia, Chip, Grid, Link, Typography } from '@mui/material';
 import { initialData } from '../../database/products';
 import { FC } from 'react';
 
@@ -37,11 +37,15 @@ export const CartList:FC<Props> = ({editable = false}) => {
                         <Grid item xs={7} sm={7}>
                             <Box display='flex' flexDirection='column' >
                                 <Typography variant="body1">{product.title}</Typography>
-                                <Typography variant="body1">Talla: <strong>M</strong></Typography>
+                                <Typography variant="body1">Talla: <strong>--</strong></Typography>
                                 {/* Condicional */}
                                 {
                                     editable
-                                    ? <ItemCounter />
+                                    ? <ItemCounter
+                                        currentValue={0}
+                                        maxValue={0}
+                                        updatedQuantity={()=> {}}
+                                    />
                                     : <Typography variant="h6"> 3 </Typography>
                                 }
                             </Box>
