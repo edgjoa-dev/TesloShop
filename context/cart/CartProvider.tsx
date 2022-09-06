@@ -54,12 +54,17 @@ const addProductToCart = ( product: ICartProduct ) => {
     dispatch( { type: '[Cart] - Update products in cart', payload: updatedProducts } )
 }
 
+const updateCartQuantity = ( product: ICartProduct ) => {
+    dispatch({ type: '[Cart] - Change cart quantity', payload: product })
+}
+
 return(
 <CartContext.Provider value={{
     ...state,
 
     //methods
     addProductToCart,
+    updateCartQuantity,
 }} >
     { children }
 </CartContext.Provider>
