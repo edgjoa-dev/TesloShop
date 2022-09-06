@@ -37,16 +37,16 @@ export const CartList:FC<Props> = ({editable = false}) => {
                         <Grid item xs={7} sm={7}>
                             <Box display='flex' flexDirection='column' >
                                 <Typography variant="body1">{product.title}</Typography>
-                                <Typography variant="body1">Talla: <strong>--</strong></Typography>
+                                <Typography variant="body1">Talla: <strong> {product.size} </strong></Typography>
                                 {/* Condicional */}
                                 {
                                     editable
                                     ? <ItemCounter
-                                        currentValue={0}
-                                        maxValue={0}
-                                        updatedQuantity={()=> {}}
+                                        currentValue={product.quantity}
+                                        maxValue={ 10 }
+                                        updatedQuantity={() => {}}
                                     />
-                                    : <Typography variant="h6"> 3 </Typography>
+                                    : <Typography variant="h6"> {product.quantity}{product.quantity > 1 ? 'productos' : 'producto'} </Typography>
                                 }
                             </Box>
                         </Grid>
