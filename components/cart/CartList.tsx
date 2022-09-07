@@ -9,7 +9,7 @@ import { ICartProduct } from '../../interfaces';
 
 
 interface Props {
-    editable?: boolean;
+    editable: boolean;
 }
 
 export const CartList:FC<Props> = ({editable = false}) => {
