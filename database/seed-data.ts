@@ -22,7 +22,7 @@ type ValidSizes = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
 type ValidTypes = 'shirts'|'pants'|'hoodies'|'hats';
 
 interface SeedData {
-    users: SeedUser[];
+    users: SeedUser[],
     products: SeedProduct[],
 }
 
