@@ -36,10 +36,14 @@ export const CartProvider:FC<Props> = ({ children }) => {
     useEffect(()=>{
 
         const numberOfItems = state.cart.reduce((prev, current) =>  current.quantity + prev , 0 );
+        const subTotal = state.cart.reduce((prev, current) =>  (current.price * current.quantity) + prev, 0);
+
 
         const orderSumary = {
             numberOfItems,
+            subTotal,
         }
+        console.log({orderSumary})
     },[state.cart])
 
 
