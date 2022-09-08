@@ -56,7 +56,6 @@ export const CartProvider:FC<Props> = ({ children }) => {
         }
 
         dispatch({ type: '[Cart] - Update order sumary', payload: orderSumary });
-        console.log({orderSumary})
     },[state.cart])
 
 
