@@ -33,6 +33,15 @@ export const CartProvider:FC<Props> = ({ children }) => {
         if(state.cart.length > 0) Cookie.set( 'cart', JSON.stringify(state.cart) );
     },[state.cart])
 
+    useEffect(()=>{
+
+        const numberOfItems = state.cart.reduce((prev, current) =>  current.quantity + prev , 0 );
+
+        const orderSumary = {
+            numberOfItems,
+        }
+    },[state.cart])
+
 
 const addProductToCart = ( product: ICartProduct ) => {
 
