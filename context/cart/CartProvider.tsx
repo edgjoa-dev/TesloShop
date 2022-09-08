@@ -5,6 +5,10 @@ import {  CartContext, cartReducer } from './';
 
 export interface CartState {
     cart: ICartProduct[];
+    numberOfItems: number;
+    subTotal: number;
+    tax: number;
+    total: number;
 }
 type Props = {
     children: React.ReactNode;
@@ -14,6 +18,10 @@ type Props = {
 
 const CART_INITIAL_STATE: CartState = {
     cart: [],
+    numberOfItems: 0,
+    subTotal: 0,
+    tax: 0,
+    total: 0,
 }
 
 export const CartProvider:FC<Props> = ({ children }) => {
@@ -44,7 +52,10 @@ export const CartProvider:FC<Props> = ({ children }) => {
             numberOfItems,
             subTotal,
             tax: subTotal * taxRate,
+            total: subTotal * (taxRate + 1)
         }
+
+        dispatch({ type: '[Cart] - Update order sumary', payload: orderSumary });
         console.log({orderSumary})
     },[state.cart])
 
