@@ -1,21 +1,31 @@
-import React from 'react'
-import { AuthLayout } from '../../components/layout';
-import { Box, Grid, Typography, TextField, Button, Link } from '@mui/material';
 import NextLink from 'next/link';
+import { Box, Grid, Typography, TextField, Button, Link } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
+import { AuthLayout } from '../../components/layout';
+import { validations } from '../../utils';
+import { tesloApi } from '../../api';
 
+
+type FormData = {
+    email: string,
+    password: string,
+};
 const LoginPage = () => {
-
-    type FormData = {
-        email: string,
-        password: string,
-    };
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
-    const onLoginUser = ( data: FormData ) => {
-        console.log( {data} );
+    const onLoginUser = async({ email, password }: FormData) => {
+        try {
+
+            const { data } = await tesloApi.post('/user/login', { email, password })
+            const { token, user } = data;
+            console.log({token, user})
+
+        } catch (error) {
+            console.log(error);
+            console.log('Error de autenticación')
+        }
     }
 
     return (
@@ -39,7 +49,7 @@ const LoginPage = () => {
                                 {
                                     ...register('email',{
                                         required: 'Email es requerido',
-                                        min: 8,
+                                        validate: validations.isEmail
                                     })
                                 }
                                 error={!!errors.email}
@@ -58,7 +68,7 @@ const LoginPage = () => {
                                 {
                                     ...register('password',{
                                     required: 'Password es requerido',
-                                    minLength: { value: 6, message: 'Deben ser minimo 8 caracteres' },
+                                    minLength: { value: 8, message: 'Deben ser minimo 8 caracteres' },
                                     })
                                 }
                                 error={!!errors.password}
