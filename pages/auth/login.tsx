@@ -31,9 +31,10 @@ const LoginPage = () => {
 
                         <Grid item xs={12}>
                             <TextField
-                                label="Correo"
-                                variant='filled'
                                 autoFocus = { true }
+                                type="email"
+                                label="email"
+                                placeholder='correo@gmail.com'
                                 {...register('email')}
                                 fullWidth
                             >
@@ -45,6 +46,7 @@ const LoginPage = () => {
                             <TextField
                                 label="Contraseña"
                                 type='password'
+                                placeholder='Almenos 8 caracteres'
                                 {...register('password')}
                                 fullWidth
                             >
