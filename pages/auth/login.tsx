@@ -35,8 +35,15 @@ const LoginPage = () => {
                                 type="email"
                                 label="email"
                                 placeholder='correo@gmail.com'
-                                {...register('email')}
                                 fullWidth
+                                {
+                                    ...register('email',{
+                                        required: 'Email es requerido',
+                                        min: 8,
+                                    })
+                                }
+                                error={!!errors.email}
+                                helperText={errors.email?.message}
                             >
                                 Correo
                             </TextField>
@@ -47,9 +54,15 @@ const LoginPage = () => {
                                 label="Contraseña"
                                 type='password'
                                 placeholder='Almenos 8 caracteres'
-                                {...register('password')}
                                 fullWidth
-                            >
+                                {
+                                    ...register('password',{
+                                    required: 'Password es requerido',
+                                    })
+                                }
+                                error={!!errors.password}
+                                helperText={errors.password?.message}
+                                >
                                 Password
                             </TextField>
                         </Grid>
