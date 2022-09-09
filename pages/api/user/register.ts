@@ -4,7 +4,7 @@ import bcrypt  from 'bcryptjs';
 
 import { db } from '../../../database';
 import { User } from '../../../models';
-import { jwt } from '../../../utils';
+import { jwt, validations } from '../../../utils';
 
 type Data =
 |{ message: string}
@@ -45,8 +45,8 @@ const registerUser = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
     if( name.length < 3){
         return res.status(400).json({message: 'Nombre no válido, debe ser de almenos 3 caracteres'})
     }
-    if( email.length < 3){
-        return res.status(400).json({message: 'Nombre no válido, debe ser de almenos 3 caracteres'})
+    if( !validations.isValidEmail(email)){
+        return res.status(400).json({message: 'El correo no es válido'})
     }
 
     await db.connect();
