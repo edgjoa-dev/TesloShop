@@ -37,8 +37,7 @@ const registerUser = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     const { email='', password='', name ='' } = req.body as { email: string, password: string, name: string };
 
-    await db.connect();
-    const user = await User.findOne({email});
+
 
     if( password.length < 8){
         return res.status(400).json({message: 'La contraseña debe ser de almenos 8 caracteres'})
@@ -50,6 +49,13 @@ const registerUser = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
         return res.status(400).json({message: 'Nombre no válido, debe ser de almenos 3 caracteres'})
     }
 
+    await db.connect();
+    const user = await User.findOne({email});
+    if(user){
+        return res.status(400).json({message: 'Correo no válido, correo ya registrado'})
+    }
+
+
     const newUser = new User({
         email: email.toLowerCase(),
         password: bcrypt.hashSync(password),
@@ -60,12 +66,13 @@ const registerUser = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
     try {
         await newUser.save({ validateBeforeSave: true });
     } catch (error) {
+        console.log(error)
         res.status(500).json({
             message: 'Revise logs del servidor para válidar error'
         })
     }
 
-    const { role, name, id } = user;
+    const { id, role } = newUser;
 
     const token = jwt.singToken( id, email )
 
