@@ -52,7 +52,7 @@ const registerUser = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
     await db.connect();
     const user = await User.findOne({email});
     if(user){
-        return res.status(400).json({message: 'Correo no válido, correo ya registrado'})
+        return res.status(400).json({message: 'Correo no válido, ya existe en database'})
     }
 
 
