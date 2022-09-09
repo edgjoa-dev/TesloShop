@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import bcrypt  from 'bcryptjs';
-
 import { db } from '../../../database';
 import { User } from '../../../models';
 import { jwt } from '../../../utils';
@@ -37,33 +35,31 @@ const checkJWT = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     const { token='' } = req.cookies;
 
-    
+    let userID = '';
 
+    try {
+        userID = await jwt.isValidToken(token.toString())
+    } catch (error) {
+        return res.status(401).json({ message: 'Invalid Token' })
+    }
 
+    await db.connect();
+    const user = await User.findById(userID).lean();
+    await db.disconnect();
 
-    // res.status(200).json({
-    //     token
-    // } as any)
+    if(!user) {
+        return res.status(400).json({message: 'No existe usuartio con id solicitado' } )
+    }
 
-    // await db.connect();
-    // await db.disconnect();
+    const {_id, email, role, name } = user;
 
-    // if(!user) {
-    //     return res.status(404).json({message: 'Usuario y/o contraseña no son válidos - email' } )
-    // }
-    // if(!bcrypt.compareSync( password, user.password! )) {
-    //     return res.status(404).json({message: 'Usuario y/o contraseña no son válidos - password' } )
-    // }
-
-    // const { role, name, id } = user;
-
-    // const token = jwt.singToken( id, email )
-
-    // return res.status(200).json({
-    //     token,
-    //     user: {
-    //         email, role, name
-    //     },
-    // })
+    return res.status(200).json({
+        token: jwt.singToken( _id, email ),
+        user: {
+            email,
+            role,
+            name
+        },
+    })
 
 }
