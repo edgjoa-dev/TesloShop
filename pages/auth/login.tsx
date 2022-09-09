@@ -58,6 +58,7 @@ const LoginPage = () => {
                                 {
                                     ...register('password',{
                                     required: 'Password es requerido',
+                                    minLength: { value: 6, message: 'Deben ser minimo 8 caracteres' },
                                     })
                                 }
                                 error={!!errors.password}
