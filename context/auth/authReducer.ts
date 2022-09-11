@@ -1,13 +1,14 @@
+import { IUser } from "../../interfaces"
 import { AuthState } = from './'
 
 
 type AuthActionType =
-|{ type: '[Name] - ActionName' }
+|{ type: '[Auth] - Login', payload: IUser }
 
-export const authReducer = (state = AuthState, action:AuthActionType): NameState => {
+export const authReducer = (state = AuthState, action:AuthActionType): AuthState => {
 
 switch (action.type) {
-case '[Name] - ActionName':
+case '[Auth] - Login':
 return {
 ...state
 }
