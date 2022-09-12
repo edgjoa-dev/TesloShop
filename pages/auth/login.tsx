@@ -6,8 +6,8 @@ import { useForm } from 'react-hook-form';
 
 import { AuthLayout } from '../../components/layout';
 import { validations } from '../../utils';
-import { tesloApi } from '../../api';
 import { AuthContext } from '../../context';
+import { useRouter } from 'next/router';
 
 
 type FormData = {
@@ -16,6 +16,7 @@ type FormData = {
 };
 const LoginPage = () => {
 
+    const router = useRouter()
     const { loginUser } = useContext( AuthContext )
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [ showError, setShowError ] = useState(false)
@@ -31,8 +32,10 @@ const LoginPage = () => {
             setTimeout(()=> {
                 setShowError(false)
             }, 3000);
-
+            return;
         }
+
+        router.replace('/')
     }
 
     return (
