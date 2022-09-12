@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import NextLink from 'next/link';
 import { Box, Grid, Typography, TextField, Button, Link, Chip } from '@mui/material';
 import { ErrorOutline } from '@mui/icons-material';
@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 import { AuthLayout } from '../../components/layout';
 import { validations } from '../../utils';
 import { tesloApi } from '../../api';
+import { AuthContext } from '../../context';
 
 
 type FormData = {
@@ -15,6 +16,7 @@ type FormData = {
 };
 const LoginPage = () => {
 
+    const { loginUser } = useContext( AuthContext )
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [ showError, setShowError ] = useState(false)
 
@@ -23,19 +25,13 @@ const LoginPage = () => {
 
         setShowError(false)
 
-        try {
-
-            const { data } = await tesloApi.post('/user/login', { email, password })
-            const { token, user } = data;
-            console.log({token, user})
-
-        } catch (error) {
-            console.log(error);
-            console.log('Error de autenticación')
+        const isValidLogin = await loginUser(email, password)
+        if(!isValidLogin){
             setShowError(true)
             setTimeout(()=> {
                 setShowError(false)
             }, 3000);
+
         }
     }
 

@@ -39,9 +39,10 @@ const loginUser = async( email: string, password: string): Promise<boolean> => {
 
 return(
 <AuthContext.Provider value={{
-    ...state
+    ...state,
 
     //Methods
+    loginUser,
 }} >
     { children }
 </AuthContext.Provider>
