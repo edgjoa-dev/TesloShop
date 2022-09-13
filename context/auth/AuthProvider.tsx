@@ -30,6 +30,10 @@ export const AuthProvider:FC<Props> = ({ children }) => {
     }, [])
 
     const checkToken = async () => {
+        if(!Cookies.get('token')){
+            return;
+        }
+
         try {
 
             const { data } =await tesloApi.get('user/validate-token');
