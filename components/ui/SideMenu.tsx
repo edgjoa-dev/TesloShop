@@ -108,43 +108,57 @@ export const SideMenu = () => {
                     <ListItemText primary={'Niños'} />
                 </ListItem>
 
-                <ListItem button>
-                    <ListItemIcon>
-                        <VpnKeyOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Ingresar'} />
-                </ListItem>
-
-                <ListItem button>
+                {
+                    isLoggedIn
+                    ?(
+                        <ListItem button>
                     <ListItemIcon>
                         <LoginOutlined/>
                     </ListItemIcon>
-                    <ListItemText primary={'Salir'} />
-                </ListItem>
+                        <ListItemText primary={'Salir'} />
+                    </ListItem>
+                    )
+                    :(
+                    <ListItem button>
+                        <ListItemIcon>
+                            <VpnKeyOutlined/>
+                        </ListItemIcon>
+                        <ListItemText primary={'Ingresar'} />
+                    </ListItem>
+
+                    )
+                }
+
+                {
+                user?.role === 'admin' &&(
+                    <>
+                        <Divider />
+                        <ListSubheader>Admin Panel</ListSubheader>
+
+                        <ListItem button>
+                            <ListItemIcon>
+                                <CategoryOutlined/>
+                            </ListItemIcon>
+                            <ListItemText primary={'Productos'} />
+                        </ListItem>
+                        <ListItem button>
+                            <ListItemIcon>
+                                <ConfirmationNumberOutlined/>
+                            </ListItemIcon>
+                            <ListItemText primary={'Ordenes'} />
+                        </ListItem>
+
+                        <ListItem button>
+                            <ListItemIcon>
+                                <AdminPanelSettings/>
+                            </ListItemIcon>
+                            <ListItemText primary={'Usuarios'} />
+                        </ListItem>
+                    </>
+                    )
+                }
 
                 {/* Admin */}
-                <Divider />
-                <ListSubheader>Admin Panel</ListSubheader>
-
-                <ListItem button>
-                    <ListItemIcon>
-                        <CategoryOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Productos'} />
-                </ListItem>
-                <ListItem button>
-                    <ListItemIcon>
-                        <ConfirmationNumberOutlined/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Ordenes'} />
-                </ListItem>
-
-                <ListItem button>
-                    <ListItemIcon>
-                        <AdminPanelSettings/>
-                    </ListItemIcon>
-                    <ListItemText primary={'Usuarios'} />
-                </ListItem>
             </List>
         </Box>
     </Drawer>
