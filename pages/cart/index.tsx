@@ -15,7 +15,11 @@ const CartPage = () => {
         if( isLoaded && cart.length === 0 ){
             router.replace('/cart/empty')
         }
-    }, [ cart, isLoaded, router ])
+    }, [  isLoaded, cart, router ])
+
+    if(!isLoaded || cart.length === 0){
+        return (<></>)
+    }
 
     return (
 
