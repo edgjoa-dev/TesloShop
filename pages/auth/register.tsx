@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form';
 
 import { AuthLayout } from '../../components/layout';
 import { validations } from '../../utils';
-import { tesloApi } from '../../api';
 import { ErrorOutline } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import { AuthContext } from '../../context';
@@ -38,8 +37,8 @@ const RegisterPage = () => {
             }, 3000);
             return
         }
-
-        router.replace('/')
+        const destination = router.query.p?.toString() || '/'
+        router.replace(destination)
     }
 
 
