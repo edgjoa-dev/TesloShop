@@ -73,8 +73,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     } catch (error) {
         isValidToken = false;
     }
-
-
+    if(!token){
+        return {
+            redirect: {
+                destination: 'auth/login?p=/checkout/address',
+                permanent: false,
+            }
+        }
+    }
     return {
         props: {
             
