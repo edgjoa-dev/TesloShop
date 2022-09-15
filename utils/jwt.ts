@@ -18,8 +18,13 @@ export const singToken = ( _id: string, email: string ) => {
 
 export const isValidToken = ( token: string ):Promise<string> => {
 
-    if(!process.env.JWT_SECRET_SEED)
-    throw new Error ('No se encontro api secret key de JWT - Válidar variables de entorno')
+    if(!process.env.JWT_SECRET_SEED){
+        throw new Error ('No se encontro api secret key de JWT - Válidar variables de entorno')
+    }
+
+    if( token.length <= 10 ){
+        return Promise.reject('JWT no es válido')
+    }
 
     return new Promise(( resolve, reject ) => {
 
