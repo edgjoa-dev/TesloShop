@@ -64,26 +64,25 @@ const AddressPage = () => {
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
     const { token = '' } = req.cookies;
-    let userId = ''
     let isValidToken = false;
 
     try {
-        userId = await jwt.isValidToken( token );
+        await jwt.isValidToken( token );
         isValidToken = true;
     } catch (error) {
         isValidToken = false;
     }
-    if(!token){
+    if(!isValidToken){
         return {
             redirect: {
-                destination: 'auth/login?p=/checkout/address',
+                destination: '/auth/login?p=/checkout/address',
                 permanent: false,
             }
         }
     }
     return {
         props: {
-            
+
         }
     }
 }
