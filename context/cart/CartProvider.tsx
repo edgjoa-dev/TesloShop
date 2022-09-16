@@ -55,18 +55,23 @@ export const CartProvider:FC<Props> = ({ children }) => {
     },[]);
 
     useEffect(()=>{
-        const shippingAddress = {
-            firstName: Cookie.get('firstName') || '',
-            lastName : Cookie.get('lastName') || '',
-            address  : Cookie.get('address') || '',
-            address2 : Cookie.get('address2' || ''),
-            zip      : Cookie.get('zip') || '',
-            city     : Cookie.get('city') || '',
-            country  : Cookie.get('country') || '',
-            phone    : Cookie.get('phone') || '',
-        }
 
-        dispatch({ type: '[Cart] - LoadAddress from Cookies', payload: shippingAddress })
+        if( Cookie.get('firstName')){
+
+            const shippingAddress = {
+                firstName: Cookie.get('firstName') || '',
+                lastName : Cookie.get('lastName') || '',
+                address  : Cookie.get('address') || '',
+                address2 : Cookie.get('address2' || ''),
+                zip      : Cookie.get('zip') || '',
+                city     : Cookie.get('city') || '',
+                country  : Cookie.get('country') || '',
+                phone    : Cookie.get('phone') || '',
+            }
+
+            dispatch({ type: '[Cart] - LoadAddress from Cookies', payload: shippingAddress })
+
+        }
     },[])
 
     useEffect(()=>{
@@ -119,6 +124,10 @@ const removeCartProduct = ( product: ICartProduct ) => {
     dispatch({ type: '[Cart] - Remove product in cart', payload: product })
 }
 
+const updateAddress = ( address: ShippingAddress ) => {
+    dispatch({ type: '[Cart] - Update Address', payload: address })
+}
+
 return(
 <CartContext.Provider value={{
     ...state,
@@ -127,6 +136,7 @@ return(
     addProductToCart,
     updateCartQuantity,
     removeCartProduct,
+    updateAddress,
 }} >
     { children }
 </CartContext.Provider>
