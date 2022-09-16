@@ -27,7 +27,7 @@ const getAddressFromCookies = ():FormData => {
         firstName: Cookies.get('firstName') || '',
         lastName : Cookies.get('lastName') || '',
         address  : Cookies.get('address') || '',
-        address2 : Cookies.get('address2' || ''),
+        address2 : Cookies.get('address2') || '',
         zip      : Cookies.get('zip') || '',
         city     : Cookies.get('city') || '',
         country  : Cookies.get('country') || '',
@@ -153,12 +153,12 @@ const AddressPage = () => {
                     <FormControl  fullWidth>
                         <TextField
                             select
-                            label='País'
                             variant='filled'
-                            value={ countries[4].code }
+                            label='País'
+                            defaultValue={ Cookies.get('country') || countries[4].code }
                             {
                                 ...register('country',{
-                                required: 'Código postal es requerido',
+                                required: 'País es requerido',
                                 })
                             }
                             error={!!errors.country}
