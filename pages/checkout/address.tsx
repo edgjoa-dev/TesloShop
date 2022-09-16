@@ -2,7 +2,8 @@ import { GetServerSideProps } from 'next'
 import { Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import { Box, display } from '@mui/system';
 import { ShopLayout } from '../../components/layout/ShopLayout';
-import { jwt } from '../../utils';
+import { countries, jwt } from '../../utils';
+
 
 const AddressPage = () => {
     return (
@@ -37,10 +38,16 @@ const AddressPage = () => {
                             label='País'
                             value={ 1 }
                         >
-                            <MenuItem value={ 1 }>México</MenuItem>
-                            <MenuItem value={ 2 }>Estados Unidos</MenuItem>
-                            <MenuItem value={ 3 }>Cánada</MenuItem>
-                            <MenuItem value={ 4 }>Guatemala</MenuItem>
+                            {
+                                countries.map( country =>(
+                                    <MenuItem
+                                        key={country.code}
+                                        value={country.code}
+                                    >
+                                        {country.name}
+                                    </MenuItem>
+                                ) )
+                            }
                         </Select>
                     </FormControl>
                 </Grid>
