@@ -10,6 +10,7 @@ export interface CartState {
     subTotal: number;
     tax: number;
     total: number;
+    shippingAddress?: ShippingAddress;
 }
 
 export interface ShippingAddress {
@@ -37,6 +38,7 @@ const CART_INITIAL_STATE: CartState = {
     subTotal: 0,
     tax: 0,
     total: 0,
+    shippingAddress: undefined,
 }
 
 export const CartProvider:FC<Props> = ({ children }) => {
@@ -51,6 +53,10 @@ export const CartProvider:FC<Props> = ({ children }) => {
             dispatch({ type: '[Cart] - LoadCart from cookies | storage', payload: []})
         }
     },[]);
+
+    useEffect(()=>{
+        
+    },[])
 
     useEffect(()=>{
         if(state.cart.length > 0) Cookie.set( 'cart', JSON.stringify(state.cart) );

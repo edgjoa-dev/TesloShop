@@ -11,7 +11,7 @@ interface contextProps{
     tax: number;
     total: number;
 
-    shippingAddress: ShippingAddress,
+    shippingAddress?: ShippingAddress,
 
 // methods
     addProductToCart: (product: ICartProduct) => void

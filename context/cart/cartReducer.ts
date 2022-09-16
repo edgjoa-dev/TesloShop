@@ -7,6 +7,7 @@ type CartActionType =
 |{ type: '[Cart] - Update products in cart', payload: ICartProduct[] }
 |{ type: '[Cart] - Change cart quantity', payload: ICartProduct }
 |{ type: '[Cart] - Remove product in cart', payload: ICartProduct }
+|{ type: '[Cart] - LoadAddress from cookie', payload:  }
 |{
    type:'[Cart] - Update order sumary',
    payload: {
