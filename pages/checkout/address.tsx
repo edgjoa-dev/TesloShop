@@ -6,6 +6,8 @@ import { countries, jwt } from '../../utils';
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import { CartContext } from '../../context/cart/CartContext';
 
 
 type FormData = {
@@ -38,6 +40,7 @@ const getAddressFromCookies = ():FormData => {
 const AddressPage = () => {
 
     const router = useRouter();
+    const { updateAddress } = useContext( CartContext )
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
         defaultValues: getAddressFromCookies()
