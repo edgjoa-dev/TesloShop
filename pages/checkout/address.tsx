@@ -5,6 +5,18 @@ import { ShopLayout } from '../../components/layout/ShopLayout';
 import { countries, jwt } from '../../utils';
 
 
+type FormData = {
+    firstName: string;
+    lastName:  string;
+    address:   string;
+    address2?:  string;
+    zip:       string;
+    city:      string;
+    country:   string;
+    phone:     string;
+}
+
+
 const AddressPage = () => {
     return (
         <ShopLayout title='Dirección' pageDescription='Confirmar direción del destino de envío'>
@@ -36,7 +48,7 @@ const AddressPage = () => {
                         <Select
                             variant='filled'
                             label='País'
-                            value={ 1 }
+                            value={ 'MEX'}
                         >
                             {
                                 countries.map( country =>(
