@@ -4,6 +4,8 @@ import { Box, display } from '@mui/system';
 import { ShopLayout } from '../../components/layout/ShopLayout';
 import { countries, jwt } from '../../utils';
 import { useForm } from 'react-hook-form';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 
 type FormData = {
@@ -17,8 +19,25 @@ type FormData = {
     phone:     string;
 }
 
+const getAddressFromCookies = ():FormData => {
+
+    return {
+        firstName: Cookies.get('firstName') || '',
+        lastName : Cookies.get('lastName') || '',
+        address  : Cookies.get('address') || '',
+        address2 : Cookies.get('address2' || ''),
+        zip      : Cookies.get('zip') || '',
+        city     : Cookies.get('city') || '',
+        country  : Cookies.get('country') || '',
+        phone    : Cookies.get('phone') || '',
+    }
+
+}
+
 
 const AddressPage = () => {
+
+    const router = useRouter();
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
         defaultValues: {
@@ -28,7 +47,7 @@ const AddressPage = () => {
             address2:  '',
             zip:       '',
             city:      '',
-            country:   countries[0].code,
+            country:   countries[4].code,
             phone:     '',
         }
     });
@@ -36,6 +55,16 @@ const AddressPage = () => {
 
     const onSubmitAddress = ( data: FormData ) => {
         console.log(data);
+        Cookies.set('firstName',data.firstName);
+        Cookies.set('lastName',data.lastName);
+        Cookies.set('address',data.address);
+        Cookies.set('address2',data.address2 || '');
+        Cookies.set('zip',data.zip);
+        Cookies.set('city',data.city);
+        Cookies.set('country',data.country);
+        Cookies.set('phone',data.phone);
+
+        router.push('/checkout/summary');
     }
 
     return (
@@ -94,7 +123,7 @@ const AddressPage = () => {
                 </Grid>
                 <Grid item xs={12} sm={ 6 }>
                     <TextField
-                    label='Entre calles'
+                    label='Localidad y Estado'
                     variant='filled'
                     fullWidth
                     {
@@ -138,8 +167,8 @@ const AddressPage = () => {
                     <FormControl  fullWidth>
                         <TextField
                             select
-                            variant='filled'
                             label='País'
+                            variant='filled'
                             value={ countries[4].code }
                             {
                                 ...register('country',{
