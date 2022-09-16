@@ -65,6 +65,8 @@ export const CartProvider:FC<Props> = ({ children }) => {
             country  : Cookie.get('country') || '',
             phone    : Cookie.get('phone') || '',
         }
+
+        dispatch({ type: '[Cart] - LoadAddress from Cookies', payload: shippingAddress })
     },[])
 
     useEffect(()=>{
