@@ -11,6 +11,19 @@ export interface CartState {
     tax: number;
     total: number;
 }
+
+export interface ShippingAddress {
+    firstName: string;
+    lastName:  string;
+    address:   string;
+    address2?: string;
+    zip:       string;
+    city:      string;
+    country:   string;
+    phone:     string;
+}
+
+
 type Props = {
     children: React.ReactNode;
 
