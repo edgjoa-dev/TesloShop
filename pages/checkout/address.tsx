@@ -48,16 +48,8 @@ const AddressPage = () => {
 
 
     const onSubmitAddress = ( data: FormData ) => {
-        console.log(data);
-        Cookies.set('firstName',data.firstName);
-        Cookies.set('lastName',data.lastName);
-        Cookies.set('address',data.address);
-        Cookies.set('address2',data.address2 || '');
-        Cookies.set('zip',data.zip);
-        Cookies.set('city',data.city);
-        Cookies.set('country',data.country);
-        Cookies.set('phone',data.phone);
 
+        updateAddress(data);
         router.push('/checkout/summary');
     }
 
