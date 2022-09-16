@@ -127,7 +127,7 @@ const AddressPage = () => {
                     {
                         ...register('city',{
                         required: 'Ciudad es requerido',
-                        minLength: { value: 8, message: 'Deben ser minimo 8 caracteres' },
+                        minLength: { value: 3, message: 'Deben ser minimo 3 caracteres' },
                         })
                     }
                     error={!!errors.city}
@@ -136,9 +136,11 @@ const AddressPage = () => {
                 </Grid>
                 <Grid item xs={12} sm={ 6 }>
                     <FormControl  fullWidth>
-                        <Select
+                        <TextField
+                            select
                             variant='filled'
                             label='País'
+                            value={ countries[4].code }
                             {
                                 ...register('country',{
                                 required: 'Código postal es requerido',
@@ -157,7 +159,7 @@ const AddressPage = () => {
                                     </MenuItem>
                                 ) )
                             }
-                        </Select>
+                        </TextField>
                     </FormControl>
                 </Grid>
                 <Grid item xs={12} sm={ 6 }>
@@ -168,7 +170,7 @@ const AddressPage = () => {
                     {
                         ...register('phone',{
                         required: 'Teléfono es requerido',
-                        minLength: { value: 8, message: 'Deben ser minimo 8 caracteres' },
+                        minLength: { value: 10, message: 'Deben ser minimo 10 caracteres' },
                         })
                     }
                     error={!!errors.phone}
