@@ -2,11 +2,15 @@ import { ShopLayout } from '../../components/layout/ShopLayout';
 import { Box, Button, Card, CardContent, Divider, Grid, Link, Typography } from '@mui/material';
 import { CartList, OrderSummary } from '../../components/cart';
 import NextLink from 'next/link';
+import { useContext } from 'react';
+import { CartContext } from '../../context';
 
 
 const SummaryPage = () => {
-    return (
 
+    const { shippingAddress, numberOfItems } = useContext(CartContext)
+
+    return (
     <ShopLayout title='Resumen de Compra' pageDescription='Resumen de la compra'>
 
             <Typography variant='h1' component='h1'>Resumen de Compra</Typography>
@@ -14,7 +18,7 @@ const SummaryPage = () => {
             <Grid container sx={{mt: 5}}>
 
                 <Grid item  xs={12} sm={7}>
-                    <CartList />
+                    <CartList editable={false} />
                 </Grid>
 
                 <Grid item  xs={12} sm={5}>
@@ -22,8 +26,7 @@ const SummaryPage = () => {
                     <Card  className='summary-card'>
 
                         <CardContent>
-                            <Typography variant='h2'>Resumen de Compra:  3 productos</Typography>
-
+                            <Typography variant='h2'>Resumen de Compra: ({numberOfItems} {numberOfItems === 1 ? 'producto' : 'productos'} )</Typography>
                             <Divider sx={{ my: 1 }} />
 
                                 <Box display='flex' justifyContent='space-between'>
