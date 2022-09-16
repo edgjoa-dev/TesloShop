@@ -40,16 +40,7 @@ const AddressPage = () => {
     const router = useRouter();
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
-        defaultValues: {
-            firstName: '',
-            lastName:  '',
-            address:   '',
-            address2:  '',
-            zip:       '',
-            city:      '',
-            country:   countries[4].code,
-            phone:     '',
-        }
+        defaultValues: getAddressFromCookies()
     });
 
 
