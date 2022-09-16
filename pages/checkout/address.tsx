@@ -20,7 +20,19 @@ type FormData = {
 
 const AddressPage = () => {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
+        defaultValues: {
+            firstName: '',
+            lastName:  '',
+            address:   '',
+            address2:  '',
+            zip:       '',
+            city:      '',
+            country:   countries[0].code,
+            phone:     '',
+        }
+    });
+
 
     const onSubmitAddress = ( data: FormData ) => {
         console.log(data);
