@@ -109,7 +109,7 @@ const AddressPage = () => {
                 </Grid>
                 <Grid item xs={12} sm={ 6 }>
                     <TextField
-                    label='Localidad y Estado'
+                    label='Municipio y Estado'
                     variant='filled'
                     fullWidth
                     {
@@ -136,7 +136,7 @@ const AddressPage = () => {
                 </Grid>
                 <Grid item xs={12} sm={ 6 }>
                     <TextField
-                    label='Ciudad'
+                    label='Colonia'
                     variant='filled'
                     fullWidth
                     {

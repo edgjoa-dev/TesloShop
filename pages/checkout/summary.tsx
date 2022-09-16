@@ -9,6 +9,10 @@ import { CartContext } from '../../context';
 const SummaryPage = () => {
 
     const { shippingAddress, numberOfItems } = useContext(CartContext)
+    if(!shippingAddress){
+        return <></>;
+    }
+    const { firstName, lastName, address, address2 = '', city, country, phone, zip } = shippingAddress;
 
     return (
     <ShopLayout title='Resumen de Compra' pageDescription='Resumen de la compra'>
@@ -38,10 +42,10 @@ const SummaryPage = () => {
                                     </NextLink>
                                 </Box>
 
-                                <Typography>Edgar Joaquin Flores</Typography>
-                                <Typography>Villahermosa #10</Typography>
-                                <Typography>Chalco, Edo. de Méx</Typography>
-                                <Typography>+52 5530921195</Typography>
+                                <Typography>{firstName} {lastName}</Typography>
+                                <Typography>{address}, {address2}</Typography>
+                                <Typography>{city}, {zip}, {country}</Typography>
+                                <Typography>{phone}</Typography>
 
                             <Divider sx={{ my: 1 }} />
                                 <Box display='flex' justifyContent='space-between'>
