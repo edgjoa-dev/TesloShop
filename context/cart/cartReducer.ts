@@ -1,4 +1,4 @@
-import { CartState }  from './';
+import { CartState, ShippingAddress }  from './';
 import { ICartProduct } from "../../interfaces"
 
 
@@ -7,7 +7,7 @@ type CartActionType =
 |{ type: '[Cart] - Update products in cart', payload: ICartProduct[] }
 |{ type: '[Cart] - Change cart quantity', payload: ICartProduct }
 |{ type: '[Cart] - Remove product in cart', payload: ICartProduct }
-|{ type: '[Cart] - LoadAddress from cookie', payload:  }
+|{ type: '[Cart] - LoadAddress from cookie', payload: ShippingAddress}
 |{
    type:'[Cart] - Update order sumary',
    payload: {

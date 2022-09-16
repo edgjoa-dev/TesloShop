@@ -55,7 +55,16 @@ export const CartProvider:FC<Props> = ({ children }) => {
     },[]);
 
     useEffect(()=>{
-        
+        const shippingAddress = {
+            firstName: Cookie.get('firstName') || '',
+            lastName : Cookie.get('lastName') || '',
+            address  : Cookie.get('address') || '',
+            address2 : Cookie.get('address2' || ''),
+            zip      : Cookie.get('zip') || '',
+            city     : Cookie.get('city') || '',
+            country  : Cookie.get('country') || '',
+            phone    : Cookie.get('phone') || '',
+        }
     },[])
 
     useEffect(()=>{
