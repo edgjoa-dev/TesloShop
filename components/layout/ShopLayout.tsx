@@ -2,7 +2,6 @@ import Head from 'next/head'
 import { FC } from 'react';
 import { NavBar, SideMenu } from '../ui';
 
-
 interface Props {
     children?: React.ReactNode;
     title: string;
@@ -32,7 +31,6 @@ export const ShopLayout:FC<Props> = ({ children, title, pageDescription, imageFu
             </nav>
 
             <SideMenu />
-
 
             <main style={{
                 margin: '80px auto',

@@ -2,8 +2,6 @@ import Head from 'next/head'
 import { FC } from 'react';
 import { Box } from '@mui/material';
 
-
-
 type Props = {
     title: string;
     children?: React.ReactNode;
