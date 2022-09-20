@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { FC, useEffect, useReducer } from 'react';
@@ -15,6 +15,7 @@ export interface AuthState {
 
 type Props = {
     children?: React.ReactNode
+    message: string
 }
 
 const AUTH_INITIAL_STATE: AuthState = {
@@ -92,6 +93,15 @@ export const AuthProvider:FC<Props> = ({ children }) => {
     const logout = () => {
         Cookies.remove('token')
         Cookies.remove('cart')
+        Cookies.remove('firstName')
+        Cookies.remove('lastName')
+        Cookies.remove('address')
+        Cookies.remove('address2')
+        Cookies.remove('zip')
+        Cookies.remove('city')
+        Cookies.remove('country')
+        Cookies.remove('phone')
+
         router.reload();
     }
 
