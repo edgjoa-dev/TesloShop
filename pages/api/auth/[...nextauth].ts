@@ -1,12 +1,38 @@
 import NextAuth from "next-auth"
 import GitHubProvider from "next-auth/providers/github";
+import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
+
+
+
+
+
 
 export const authOptions = {
     providers: [
         GitHubProvider({
-        clientId: process.env.GITHUB_ID,
-        clientSecret: process.env.GITHUB_SECRET
+            clientId: process.env.GITHUB_ID,
+            clientSecret: process.env.GITHUB_SECRET
+        }),
+
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+        }),
+        CredentialsProvider({
+            name: 'Custom Login',
+            credentials:{
+                email:{ label: 'Correo', type:'email', placeholder:'example@gmail.com' },
+                password:{label: 'Contraseña', type:'password', placeholder:'contraseña'}
+            },
+            async authorize(credentials) {
+
+                console.log({credentials})
+
+                return null;
+            }
         })
-    ]
+    ],
+
 }
 export default NextAuth(authOptions)
