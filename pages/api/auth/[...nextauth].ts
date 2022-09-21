@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { dbUsers } from "../../../database";
 
 
 export const authOptions = {
@@ -12,10 +13,10 @@ export const authOptions = {
                 password:{label: 'Contraseña', type:'password', placeholder:'contraseña'}
             },
             async authorize(credentials) {
-
                 console.log({credentials})
 
-                return null;
+                return await dbUsers.checkUserEmailPassword(credentials?.email, credentials?.password)
+
             }
         }),
         GitHubProvider({
@@ -37,6 +38,8 @@ export const authOptions = {
                 switch (account.type) {
                     case 'oauth':
                         // TODO: crear usuario o verificar si ya existe en DB
+
+
                         break;
                     case 'credentials':
                         token.user = user;
@@ -46,10 +49,11 @@ export const authOptions = {
 
             return token;
         },
-        async session({token, session, user}){
 
-            token.accessToken = account.access_token;
+        async session({session, token, user}){
+            session.accessToken  = token.accessToken;
             session.user = token.user as any
+
             return session;
         },
     },

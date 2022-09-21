@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 
 
 
-export const checkEmailPassword = async( email: string, password: string ) => {
+export const checkUserEmailPassword = async( email: string = '', password: string = '' ) => {
 
     await db.connect()
     const user = await User.findOne({ email })
