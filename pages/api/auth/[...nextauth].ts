@@ -1,11 +1,6 @@
 import NextAuth from "next-auth"
 import GitHubProvider from "next-auth/providers/github";
 import CredentialsProvider from "next-auth/providers/credentials";
-import jwt from 'jsonwebtoken';
-
-
-
-
 
 
 export const authOptions = {
@@ -24,8 +19,8 @@ export const authOptions = {
             }
         }),
         GitHubProvider({
-            clientId: process.env.GITHUB_ID,
-            clientSecret: process.env.GITHUB_SECRET
+            clientId: process.env.GITHUB_ID!,
+            clientSecret: process.env.GITHUB_SECRET!
         }),
     ],
 
@@ -34,18 +29,15 @@ export const authOptions = {
     },
 
     callbacks: {
-        async jwt( {token, account, user} ){
+        async jwt( {token, account, user}) {
 
             if(account){
-
                 token.accessToken = account.access_token;
 
                 switch (account.type) {
-
                     case 'oauth':
                         // TODO: crear usuario o verificar si ya existe en DB
                         break;
-
                     case 'credentials':
                         token.user = user;
                         break;
