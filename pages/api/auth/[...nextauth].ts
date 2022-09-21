@@ -34,7 +34,32 @@ export const authOptions = {
     },
 
     callbacks: {
-        
+        async jwt( {token, account, user} ){
+
+            if(account){
+
+                token.accessToken = account.access_token;
+
+                switch (account.type) {
+
+                    case 'oauth':
+                        // TODO: crear usuario o verificar si ya existe en DB
+                        break;
+
+                    case 'credentials':
+                        token.user = user;
+                        break;
+                }
+            }
+
+            return token;
+        },
+        async session({token, session, user}){
+
+            token.accessToken = account.access_token;
+            session.user = token.user as any
+            return session;
+        },
     },
 
 }
