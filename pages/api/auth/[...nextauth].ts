@@ -38,9 +38,9 @@ export const authOptions = {
                 switch (account.type) {
                     case 'oauth':
                         // TODO: crear usuario o verificar si ya existe en DB
-
-
+                        token.user = await dbUsers.oAuthToDbUser( user?.name || '', user?.email || '')
                         break;
+
                     case 'credentials':
                         token.user = user;
                         break;
