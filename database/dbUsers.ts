@@ -32,7 +32,7 @@ export const checkUserEmailPassword = async( email: string = '', password: strin
 
 //Crear o verificar usuario
 
-export const oAuthToDbUser  = async( oAuthEmail: string, oAuthName: string,) => {
+export const oAuthToDbUser = async( oAuthEmail: string, oAuthName: string ) => {
 
     await db.connect()
     const user = await User.findOne({email: oAuthEmail})
@@ -43,7 +43,7 @@ export const oAuthToDbUser  = async( oAuthEmail: string, oAuthName: string,) => 
         return{ _id, name, email, role }
     }
 
-    const newUser = new User({name: oAuthName, email: oAuthEmail, password: '@', role: 'client'})
+    const newUser = new User({ email: oAuthEmail, name: oAuthName, password: '@', role: 'client' })
     await newUser.save();
     await db.disconnect()
 
