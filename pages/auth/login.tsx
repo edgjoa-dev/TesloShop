@@ -9,6 +9,7 @@ import { validations } from '../../utils';
 import { AuthContext } from '../../context';
 import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/react';
+import { GetServerSideProps } from 'next';
 
 
 type FormData = {
@@ -119,5 +120,17 @@ const LoginPage = () => {
         </AuthLayout>
     )
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+
+
+
+    return {
+        props: {
+
+        }
+    }
+}
+
 
 export default LoginPage;
