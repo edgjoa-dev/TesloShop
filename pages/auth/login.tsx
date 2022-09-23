@@ -8,6 +8,7 @@ import { AuthLayout } from '../../components/layout';
 import { validations } from '../../utils';
 import { AuthContext } from '../../context';
 import { useRouter } from 'next/router';
+import { signIn } from 'next-auth/react';
 
 
 type FormData = {
@@ -23,19 +24,20 @@ const LoginPage = () => {
 
 
     const onLoginUser = async({ email, password }: FormData) => {
-
         setShowError(false)
 
-        const isValidLogin = await loginUser(email, password)
-        if(!isValidLogin){
-            setShowError(true)
-            setTimeout(()=> {
-                setShowError(false)
-            }, 3000);
-            return;
-        }
-        const destination = router.query.p?.toString() || '/'
-        router.replace(destination)
+        await signIn('credentials', { email, password})
+
+        // const isValidLogin = await loginUser(email, password)
+        // if(!isValidLogin){
+        //     setShowError(true)
+        //     setTimeout(()=> {
+        //         setShowError(false)
+        //     }, 3000);
+        //     return;
+        // }
+        // const destination = router.query.p?.toString() || '/'
+        // router.replace(destination)
     }
 
     return (

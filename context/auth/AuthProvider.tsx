@@ -116,22 +116,20 @@ export const AuthProvider:FC<Props> = ({ children }) => {
         Cookies.remove('phone')
 
         signOut();
-
         //router.reload();
         //Cookies.remove('token')
     }
 
+    return(
+        <AuthContext.Provider value={{
+            ...state,
 
-return(
-<AuthContext.Provider value={{
-    ...state,
-
-    //Methods
-    loginUser,
-    registerUser,
-    logout,
-}} >
-    { children }
-</AuthContext.Provider>
-)
+            //Methods
+            loginUser,
+            registerUser,
+            logout,
+        }} >
+            { children }
+        </AuthContext.Provider>
+    )
 }
