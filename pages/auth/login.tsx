@@ -1,14 +1,14 @@
-import { useContext, useState } from 'react'
+import {  useState } from 'react'
 import NextLink from 'next/link';
-import { Box, Grid, Typography, TextField, Button, Link, Chip } from '@mui/material';
+import { Box, Grid, Typography, TextField, Button, Link, Chip, Divider } from '@mui/material';
 import { ErrorOutline } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 
 import { AuthLayout } from '../../components/layout';
 import { validations } from '../../utils';
-import { AuthContext } from '../../context';
+//import { AuthContext } from '../../context';
 import { useRouter } from 'next/router';
-import { getSession, signIn } from 'next-auth/react';
+import { getSession, signIn, getProviders } from 'next-auth/react';
 import { GetServerSideProps } from 'next';
 
 
@@ -19,9 +19,10 @@ type FormData = {
 const LoginPage = () => {
 
     const router = useRouter()
-    const { loginUser } = useContext( AuthContext )
+    // const { loginUser } = useContext( AuthContext )
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [ showError, setShowError ] = useState(false)
+    const [ providers, setProviders ] = useState<any>({})
 
 
     const onLoginUser = async({ email, password }: FormData) => {
@@ -113,6 +114,13 @@ const LoginPage = () => {
                                 <Link underline='hover' > ¿Aún no tienes una cuentá? </Link>
                             </NextLink>
                         </Grid>
+
+                        <Grid item xs={12} display='flex' justifyContent='end'>
+                            <Divider sx={{ width: '100%', mb: 2 }} />
+
+
+                        </Grid>
+
                     </Grid>
                 </Box>
             </form>
