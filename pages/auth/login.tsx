@@ -8,7 +8,7 @@ import { AuthLayout } from '../../components/layout';
 import { validations } from '../../utils';
 import { AuthContext } from '../../context';
 import { useRouter } from 'next/router';
-import { signIn } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import { GetServerSideProps } from 'next';
 
 
@@ -121,14 +121,23 @@ const LoginPage = () => {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
 
+    const session = await getSession({ req })
 
+    const { p = '/' } = query;
+
+    if (session) {
+        return {
+            redirect: {
+                destination: p.toString(),
+                permanent: false,
+            }
+        }
+    }
 
     return {
-        props: {
-
-        }
+        props: { }
     }
 }
 
