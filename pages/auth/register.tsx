@@ -9,6 +9,7 @@ import { validations } from '../../utils';
 import { ErrorOutline } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import { AuthContext } from '../../context';
+import { signIn } from 'next-auth/react';
 
 
 type FormData = {
@@ -25,6 +26,7 @@ const RegisterPage = () => {
     const [ showError, setShowError ] = useState(false)
     const [ errorMEssage, setErrorMessage ] = useState('')
 
+
     const onRegisterForm = async({ name, email, password }: FormData) => {
 
         setShowError(false)
@@ -37,8 +39,10 @@ const RegisterPage = () => {
             }, 3000);
             return
         }
-        const destination = router.query.p?.toString() || '/'
-        router.replace(destination)
+        // const destination = router.query.p?.toString() || '/'
+        // router.replace(destination)
+
+        await signIn('credentials', { email, password });
     }
 
 
