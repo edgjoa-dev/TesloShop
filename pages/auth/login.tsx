@@ -23,6 +23,7 @@ const LoginPage = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [ showError, setShowError ] = useState(false)
     const [ providers, setProviders ] = useState<any>({})
+    console.log(providers)
 
     useEffect(() => {
 
@@ -127,6 +128,9 @@ const LoginPage = () => {
                             <Divider sx={{ width: '100%', mb: 2 }} />
                             {
                                 Object.values( providers ).map((provider: any)=>{
+
+                                    if(provider.id === "credentials") return(<div key="credentials"></div>)
+
                                     return(
                                     <Button
                                         key={ provider.id }
