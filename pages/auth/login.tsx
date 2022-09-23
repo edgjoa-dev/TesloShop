@@ -138,6 +138,7 @@ const LoginPage = () => {
                                         fullWidth
                                         color="primary"
                                         sx={{ mb: 2 }}
+                                        onClick={ () => (signIn(provider.id))}
                                     >
                                         {provider.name}
                                     </Button>)
