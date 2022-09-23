@@ -15,7 +15,7 @@ export const authOptions = {
             async authorize(credentials) {
                 console.log({credentials})
 
-                return await dbUsers.checkUserEmailPassword(credentials?.email, credentials?.password)
+                return await dbUsers.checkUserEmailPassword(credentials!.email, credentials!.password)
 
             }
         }),
@@ -24,6 +24,13 @@ export const authOptions = {
             clientSecret: process.env.GITHUB_SECRET!
         }),
     ],
+
+    //Login Custom Pages
+    pages: {
+        signIn: '/auth/login',
+        newUser: '/auth/register',
+    },
+
 
     jwt: {
 
