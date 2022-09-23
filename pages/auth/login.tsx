@@ -1,4 +1,4 @@
-import {  useState } from 'react'
+import { useState, useEffect } from 'react';
 import NextLink from 'next/link';
 import { Box, Grid, Typography, TextField, Button, Link, Chip, Divider } from '@mui/material';
 import { ErrorOutline } from '@mui/icons-material';
@@ -23,6 +23,14 @@ const LoginPage = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [ showError, setShowError ] = useState(false)
     const [ providers, setProviders ] = useState<any>({})
+
+    useEffect(() => {
+
+        getProviders().then( prov => {
+            setProviders( prov )
+        })
+
+    }, [])
 
 
     const onLoginUser = async({ email, password }: FormData) => {
@@ -115,10 +123,22 @@ const LoginPage = () => {
                             </NextLink>
                         </Grid>
 
-                        <Grid item xs={12} display='flex' justifyContent='end'>
+                        <Grid item xs={12} display='flex' flexDirection='column' justifyContent='end'>
                             <Divider sx={{ width: '100%', mb: 2 }} />
-
-
+                            {
+                                Object.values( providers ).map((provider: any)=>{
+                                    return(
+                                    <Button
+                                        key={ provider.id }
+                                        variant="outlined"
+                                        fullWidth
+                                        color="primary"
+                                        sx={{ mb: 2 }}
+                                    >
+                                        {provider.name}
+                                    </Button>)
+                                })
+                            }
                         </Grid>
 
                     </Grid>
