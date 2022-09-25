@@ -1,17 +1,23 @@
-import { ShopLayout } from '../../components/layout/ShopLayout';
-import { Box, Button, Card, CardContent, Divider, Grid, Link, Typography } from '@mui/material';
-import { CartList, OrderSummary } from '../../components/cart';
-import NextLink from 'next/link';
 import { useContext, useEffect } from 'react';
-import { CartContext } from '../../context';
-import Cookies from 'js-cookie';
+
 import { useRouter } from 'next/router';
+import NextLink from 'next/link';
+import { CartContext } from '../../context';
+
+import Cookies from 'js-cookie';
+
+import { ShopLayout } from '../../components/layout/ShopLayout';
+import { CartList, OrderSummary } from '../../components/cart';
+import { Box, Button, Card, CardContent, Divider, Grid, Link, Typography } from '@mui/material';
+
 
 
 const SummaryPage = () => {
 
     const router = useRouter()
+
     const { shippingAddress, numberOfItems } = useContext(CartContext)
+    console.log(shippingAddress)
 
     useEffect(()=>{
         if(!Cookies.get('firstName')){
@@ -19,9 +25,12 @@ const SummaryPage = () => {
         }
     }, [router])
 
+
     if(!shippingAddress){
         return <></>;
     }
+
+
     const { firstName, lastName, address, address2 = '', city, country, phone, zip } = shippingAddress;
 
     return (
