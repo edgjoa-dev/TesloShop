@@ -14,22 +14,20 @@ import { Box, Button, Card, CardContent, Divider, Grid, Link, Typography } from 
 
 const SummaryPage = () => {
 
-    const router = useRouter()
+    const router = useRouter();
+    const { shippingAddress, numberOfItems } = useContext( CartContext );
 
-    const { shippingAddress, numberOfItems } = useContext(CartContext)
-    console.log(shippingAddress)
-
-    useEffect(()=>{
-        if(!Cookies.get('firstName')){
-            router.push('/checkout/address')
+    useEffect(() => {
+        if ( !Cookies.get('firstName') ) {
+            router.push('/checkout/address');
         }
-    }, [router])
+    }, [ router ]);
 
 
-    if(!shippingAddress){
+
+    if ( !shippingAddress ) {
         return <></>;
     }
-
 
     const { firstName, lastName, address, address2 = '', city, country, phone, zip } = shippingAddress;
 

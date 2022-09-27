@@ -38,7 +38,7 @@ export const AuthProvider:FC<Props> = ({ children }) => {
             dispatch({ type: '[Auth] - Login', payload: data?.user as IUser})
         }
 
-    }, [data, status]);
+    }, [status, data]);
 
 
 
@@ -90,7 +90,7 @@ export const AuthProvider:FC<Props> = ({ children }) => {
             }
 
         } catch (error) {
-            if( !axios.isAxiosError(error as Error) ){
+            if( axios.isAxiosError(error) ){
                 return{
                     hasError: true,
                     message: error.response?.data.message
