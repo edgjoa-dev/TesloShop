@@ -1,10 +1,10 @@
-import { db } from '.';
+import { db } from './';
 import User from '../models/User';
 import bcrypt from 'bcryptjs';
 
 
 
-export const checkUserEmailPassword = async( email: string = '', password: string = '' ) => {
+export const checkUserEmailPassword = async( email: string, password: string ) => {
 
     await db.connect()
     const user = await User.findOne({ email })
@@ -47,7 +47,7 @@ export const oAuthToDbUser = async( oAuthEmail: string, oAuthName: string ) => {
     await newUser.save();
     await db.disconnect()
 
-    const { _id, name, email, role } = newUser
+    const { _id, name, email, role } = newUser;
     return { _id, name, email, role };
 
 }

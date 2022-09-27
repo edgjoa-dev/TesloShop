@@ -20,13 +20,14 @@ const LoginPage = () => {
 
     const router = useRouter()
     // const { loginUser } = useContext( AuthContext )
+
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
     const [ showError, setShowError ] = useState(false)
     const [ providers, setProviders ] = useState<any>({})
+
     console.log(providers)
 
     useEffect(() => {
-
         getProviders().then( prov => {
             setProviders( prov )
         })
@@ -37,7 +38,7 @@ const LoginPage = () => {
     const onLoginUser = async({ email, password }: FormData) => {
         setShowError(false)
 
-        await signIn('credentials', { email, password})
+        await signIn('credentials', { email, password});
 
         // const isValidLogin = await loginUser(email, password)
         // if(!isValidLogin){

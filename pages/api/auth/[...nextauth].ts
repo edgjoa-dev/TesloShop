@@ -1,20 +1,19 @@
 import NextAuth from "next-auth"
 import GitHubProvider from "next-auth/providers/github";
-import CredentialsProvider from "next-auth/providers/credentials";
+import Credentials from "next-auth/providers/credentials";
 import { dbUsers } from "../../../database";
 
 
-export const authOptions = {
+export default NextAuth ({
     providers: [
-        CredentialsProvider({
+        Credentials({
             name: 'Custom Login',
-            credentials:{
-                email:{ label: 'Correo', type:'email', placeholder:'example@gmail.com' },
-                password:{label: 'Contraseña', type:'password', placeholder:'contraseña'}
+            credentials: {
+                email: { label: 'Correo', type:'email', placeholder:'example@gmail.com' },
+                password:{label: 'Contraseña', type:'password', placeholder:'contraseña'},
             },
             async authorize(credentials) {
-                console.log({credentials})
-
+                console.log( {credentials} )
                 return await dbUsers.checkUserEmailPassword(credentials!.email, credentials!.password)
 
             }
@@ -36,9 +35,9 @@ export const authOptions = {
     },
 
     session: {
-        maxAge: 43200, //12 hours
+        maxAge: 2592000, //12 hours
         strategy: 'jwt',
-        updateAge: 43200, //12 hours
+        updateAge: 86400, //cada dia
     },
 
     callbacks: {
@@ -49,7 +48,7 @@ export const authOptions = {
 
                 switch (account.type) {
                     case 'oauth':
-                        token.user = await dbUsers.oAuthToDbUser( user?.email || '', user?.name || '' )
+                        token.user = await dbUsers.oAuthToDbUser( user?.email || '', user?.name || '' );
                         break;
 
                     case 'credentials':
@@ -69,5 +68,4 @@ export const authOptions = {
         },
     },
 
-}
-export default NextAuth(authOptions)
+})

@@ -14,8 +14,8 @@ import { GetServerSideProps } from 'next';
 
 
 type FormData = {
-    name: string,
-    email: string,
+    name    : string,
+    email   : string,
     password: string,
 };
 
@@ -28,23 +28,22 @@ const RegisterPage = () => {
     const [ errorMEssage, setErrorMessage ] = useState('')
 
 
-    const onRegisterForm = async({ name, email, password }: FormData) => {
+const onRegisterForm = async( { name, email, password }: FormData ) => {
 
-        setShowError(false)
-        const { hasError, message } = await registerUser(name, email, password);
-        if(hasError){
-            setShowError(true)
-            setErrorMessage( message || '');
-            setTimeout(()=> {
-                setShowError(false)
-            }, 3000);
-            return
-        }
-        // const destination = router.query.p?.toString() || '/'
-        // router.replace(destination)
+    setShowError( false )
+    const { hasError, message } = await registerUser(name, email, password);
 
-        await signIn('credentials', { email, password });
+    if( hasError ) {
+        setShowError(true)
+        setErrorMessage( message!);
+        setTimeout(() =>  setShowError(false), 3000);
+        return;
     }
+    // const destination = router.query.p?.toString() || '/'
+    // router.replace(destination)
+
+    await signIn('credentials', { email, password });
+}
 
 
 
