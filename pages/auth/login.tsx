@@ -25,8 +25,6 @@ const LoginPage = () => {
     const [ showError, setShowError ] = useState(false)
     const [ providers, setProviders ] = useState<any>({})
 
-    console.log(providers)
-
     useEffect(() => {
         getProviders().then( prov => {
             setProviders( prov )
@@ -128,7 +126,7 @@ const LoginPage = () => {
                         <Grid item xs={12} display='flex' flexDirection='column' justifyContent='end'>
                             <Divider sx={{ width: '100%', mb: 2 }} />
                             {
-                                Object.values( providers ).map((provider: any)=>{
+                                Object.values( providers ).map((provider: any) => {
 
                                     if(provider.id === "credentials") return(<div key="credentials"></div>)
 
@@ -139,7 +137,7 @@ const LoginPage = () => {
                                         fullWidth
                                         color="primary"
                                         sx={{ mb: 2 }}
-                                        onClick={ () => (signIn(provider.id))}
+                                        onClick={ () => signIn(provider.id)}
                                     >
                                         {provider.name}
                                     </Button>)
@@ -159,12 +157,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
     const session = await getSession({ req })
 
-    const { p = '/' } = query;
+    const { callbackUrl = '/' } = query;
 
     if (session) {
         return {
             redirect: {
-                destination: p.toString(),
+                destination: callbackUrl.toString(),
                 permanent: false,
             }
         }
