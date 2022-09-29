@@ -149,12 +149,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
     const session = await getSession({ req })
 
-    const { callbackUrl = '/' } = query;
+    const { p = '/' } = query;
 
     if (session) {
         return {
             redirect: {
-                destination: callbackUrl.toString(),
+                destination: p.toString(),
                 permanent: false,
             }
         }

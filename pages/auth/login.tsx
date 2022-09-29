@@ -22,8 +22,8 @@ const LoginPage = () => {
     // const { loginUser } = useContext( AuthContext )
 
     const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
-    const [ showError, setShowError ] = useState(false)
-    const [ providers, setProviders ] = useState<any>({})
+    const [ showError, setShowError ] = useState(false);
+    const [ providers, setProviders ] = useState<any>({});
 
     useEffect(() => {
         getProviders().then( prov => {
@@ -157,12 +157,12 @@ export const getServerSideProps: GetServerSideProps = async ({ req, query }) => 
 
     const session = await getSession({ req })
 
-    const { callbackUrl = '/' } = query;
+    const { p = '/' } = query;
 
     if (session) {
         return {
             redirect: {
-                destination: callbackUrl.toString(),
+                destination: p.toString(),
                 permanent: false,
             }
         }
