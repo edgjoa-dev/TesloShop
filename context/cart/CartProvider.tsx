@@ -16,7 +16,6 @@ export interface CartState {
 
 type Props = {
     children: React.ReactNode;
-
 }
 
 

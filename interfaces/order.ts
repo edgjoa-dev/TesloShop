@@ -4,7 +4,7 @@ import { IUser } from './user';
 export interface IOrder {
     _id :            string;
     user?:           IUser | string;
-    oerderItems:     IOrderItem[];
+    orderItems:     IOrderItem[];
     shippingAddress: ShippingAddress;
     paymentResult?:  string;
 
