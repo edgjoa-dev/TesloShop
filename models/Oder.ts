@@ -33,8 +33,6 @@ const OrderSchema = new Schema({
     isPAid  : { type: Boolean, required: true },
     paidAt  : { type: String},
 
-//name: { type: String, required: true },
-
 }, {
     timestamps: true,
 })

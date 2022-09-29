@@ -1,8 +1,13 @@
 import { FC, useReducer, useEffect } from 'react';
 import Cookie from 'js-cookie'
+
 import { ICartProduct, ShippingAddress } from '../../interfaces';
 import {  CartContext, cartReducer } from './';
+import { tesloApi } from '../../api';
 
+type Props = {
+    children: React.ReactNode;
+}
 export interface CartState {
     isLoaded: boolean;
     cart: ICartProduct[];
@@ -11,11 +16,6 @@ export interface CartState {
     tax: number;
     total: number;
     shippingAddress?: ShippingAddress;
-}
-
-
-type Props = {
-    children: React.ReactNode;
 }
 
 
@@ -125,6 +125,19 @@ const updateAddress = ( address: ShippingAddress ) => {
     dispatch({ type: '[Cart] - Update Address', payload: address })
 }
 
+const createOrder = async() => {
+
+    try {
+
+        const data = await tesloApi.post('/orders')
+        console.log({data})
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
 return(
 <CartContext.Provider value={{
     ...state,
@@ -134,6 +147,7 @@ return(
     updateCartQuantity,
     removeCartProduct,
     updateAddress,
+    createOrder,
 }} >
     { children }
 </CartContext.Provider>
