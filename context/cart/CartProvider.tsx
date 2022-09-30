@@ -1,7 +1,7 @@
 import { FC, useReducer, useEffect } from 'react';
 import Cookie from 'js-cookie'
 
-import { ICartProduct, ShippingAddress } from '../../interfaces';
+import { ICartProduct, IOrder, ShippingAddress } from '../../interfaces';
 import {  CartContext, cartReducer } from './';
 import { tesloApi } from '../../api';
 
@@ -127,8 +127,15 @@ const updateAddress = ( address: ShippingAddress ) => {
 
 const createOrder = async() => {
 
-    try {
+    if(!state.shippingAddress){
+        throw new Error('No existe direccion para entrga');
+    }
 
+    const body: IOrder = {
+
+    }
+
+    try {
         const data = await tesloApi.post('/orders')
         console.log({data})
 
