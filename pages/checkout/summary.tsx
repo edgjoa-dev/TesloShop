@@ -15,13 +15,18 @@ import { Box, Button, Card, CardContent, Divider, Grid, Link, Typography } from 
 const SummaryPage = () => {
 
     const router = useRouter();
-    const { shippingAddress, numberOfItems } = useContext( CartContext );
+    const { shippingAddress, numberOfItems, createOrder } = useContext( CartContext );
 
     useEffect(() => {
         if ( !Cookies.get('firstName') ) {
             router.push('/checkout/address');
         }
     }, [ router ]);
+
+
+    const onCreateOrder = () => {
+        createOrder();
+    }
 
 
 
@@ -76,7 +81,12 @@ const SummaryPage = () => {
                                 <OrderSummary />
 
                             <Box  sx={{mt: 3}}>
-                                <Button color='secondary' className='circular-btn' fullWidth>
+                                <Button
+                                color='secondary'
+                                className='circular-btn'
+                                fullWidth
+                                onClick={onCreateOrder}
+                                >
                                     Confirmar Compra
                                 </Button>
                             </Box>
