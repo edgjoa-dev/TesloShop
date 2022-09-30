@@ -1,9 +1,9 @@
 import { ISize, IUser } from './';
 
 export interface IOrder {
-    _id :            string;
+    _id?:            string;
     user?:           IUser | string;
-    orderItems:     IOrderItem[];
+    orderItems:      IOrderItem[];
     shippingAddress: ShippingAddress;
     paymentResult?:  string;
 

@@ -17,6 +17,11 @@ type Data = {
     }
 
     function createOrder(req: NextApiRequest, res: NextApiResponse<Data>) {
-    res.status(200).json({ message: 'Create order from api' })
 
+        const body = req.body;
+
+        
+
+
+        res.status(200).json(body);
 }
