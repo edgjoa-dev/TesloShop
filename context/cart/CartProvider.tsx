@@ -132,18 +132,17 @@ const createOrder = async() => {
     }
 
     const body: IOrder = {
-        orderItems: state.cart.map(p => ({
+        orderItems: state.cart.map( p => ({
             ...p,
-            size: p.size!,
+            size: p.size!
         })),
         shippingAddress: state.shippingAddress,
         numberOfItems: state.numberOfItems,
         subTotal: state.subTotal,
         tax: state.tax,
         total: state.total,
-        isPAid: false,
+        isPaid: false
     }
-
     try {
         const data = await tesloApi.post('/orders', body)
         console.log({data})

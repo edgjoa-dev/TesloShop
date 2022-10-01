@@ -1,71 +1,86 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { IOrder } from '../../../interfaces';
 import { getSession } from 'next-auth/react';
-import { Product } from '../../../models';
 import { db } from '../../../database';
-import { response } from 'express';
+import { IOrder } from '../../../interfaces';
+import { Product, Order } from '../../../models';
 
 
-type Data = {
-    message: string
-}
+type Data =
+| { message: string }
+| IOrder;
 
-    export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 
-        switch (req.method) {
-            case 'POST':
-                return createOrder( req, res );
 
-            default:
-                return res.status(404).json({ message: 'Invalid method' });
-        }
+    switch( req.method ) {
+        case 'POST':
+            return createOrder( req, res );
+
+        default:
+            return res.status(400).json({ message: 'Bad request' })
 
     }
 
-    const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-        const { orderItems, total } = req.body as IOrder;
+}
 
-        //Verificar la session de usuario
-        const session = await getSession({ req })
-        if( !session ){
-            return res.status(401).json({ message: 'Debe de estar autenticado para hacer está acción' })
-        }
+const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-        //verificar precios de producto contra DB
-        const productsIds = orderItems.map( product => product._id )
-        await db.connect();
+    const { orderItems, total } = req.body as IOrder;
 
-        const dbProducts = await Product.find({ _id: { $in: productsIds } })
+    // Vericar que tengamos un usuario
+    const session: any = await getSession({ req });
+    console.log({ session });
+    if ( !session ) {
+        return res.status(401).json({message: 'Debe de estar autenticado para hacer esto'});
+    }
 
-        try {
-            const subTotal = orderItems.reduce((prev, current) => {
+    // Crear un arreglo con los productos que la persona quiere
+    const productsIds = orderItems.map( product => product._id );
+    await db.connect();
 
-                const currentPrice = dbProducts.find( prod => prod._id === current._id)?.price
-                if(!currentPrice){
-                    throw new Error('Validar montos de productos, ya que no son correctos')
-                }
+    const dbProducts = await Product.find({ _id: { $in: productsIds } });
 
-                return (currentPrice * current.quantity) + prev
-            }, 0);
+    try {
 
-            const taxRate = Number(process.env.NEXT_PUBLIC_TAX_RATE || 0);
-            const backendTotal = subTotal * (taxRate + 1);
-
-            if( total !== backendTotal){
-                throw new Error('Total no es correcto')
+        const subTotal = orderItems.reduce( ( prev, current ) => {
+            const currentPrice = dbProducts.find( prod => prod.id === current._id )?.price;
+            if ( !currentPrice ) {
+                throw new Error('Verifique el carrito de nuevo, producto no existe');
             }
 
-            //todo bien hata aqui
+            return (currentPrice * current.quantity) + prev
+        }, 0 );
 
-            
 
-        } catch (error:any) {
-            await db.disconnect();
-            console.log(error);
-            res.status(400).json({
-                message: error.message || 'Revisar logs del servidor'
-            })
+        const taxRate =  Number(process.env.NEXT_PUBLIC_TAX_RATE || 0);
+        const backendTotal = subTotal * ( taxRate + 1 );
+
+        if ( total !== backendTotal ) {
+            throw new Error('El total no cuadra con el monto');
         }
 
+        // Todo bien hasta este punto
+        const userId = session.user._id;
+        console.log(userId)
+        const newOrder = new Order({ ...req.body, isPaid: false, user: userId });
+        // await newOrder.save();
+        // await db.disconnect();
+
+        return res.status(201).json( newOrder );
+
+
+
+    } catch (error:any) {
+        await db.disconnect();
+        console.log(error);
+        res.status(400).json({
+            message: error.message || 'Revise logs del servidor'
+        })
+    }
+
+
+
+
+    // return res.status(201).json( req.body );
 }
