@@ -3,6 +3,7 @@ import { IOrder } from '../../../interfaces';
 import { getSession } from 'next-auth/react';
 import { Product } from '../../../models';
 import { db } from '../../../database';
+import { response } from 'express';
 
 
 type Data = {
@@ -47,9 +48,24 @@ type Data = {
 
                 return (currentPrice * current.quantity) + prev
             }, 0);
-        } catch (error) {
 
+            const taxRate = Number(process.env.NEXT_PUBLIC_TAX_RATE || 0);
+            const backendTotal = subTotal * (taxRate + 1);
+
+            if( total !== backendTotal){
+                throw new Error('Total no es correcto')
+            }
+
+            //todo bien hata aqui
+
+            
+
+        } catch (error:any) {
+            await db.disconnect();
+            console.log(error);
+            res.status(400).json({
+                message: error.message || 'Revisar logs del servidor'
+            })
         }
 
-        res.status(200).json(body);
 }
