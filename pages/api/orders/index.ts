@@ -64,12 +64,9 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         const userId = session.user._id;
         console.log(userId)
         const newOrder = new Order({ ...req.body, isPaid: false, user: userId });
-        // await newOrder.save();
-        // await db.disconnect();
+        await newOrder.save();
 
         return res.status(201).json( newOrder );
-
-
 
     } catch (error:any) {
         await db.disconnect();
@@ -78,8 +75,6 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             message: error.message || 'Revise logs del servidor'
         })
     }
-
-
 
 
     // return res.status(201).json( req.body );
