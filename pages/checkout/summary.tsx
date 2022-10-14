@@ -24,7 +24,7 @@ const SummaryPage = () => {
     }, [ router ]);
 
 
-    const onCreateOrder = () => {
+    const onCreateOrder = async() => {
         createOrder();
     }
 

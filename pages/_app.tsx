@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         fetcher: (resource, init) => fetch(resource, init).then(res => res.json())
     }}
     >
-      <AuthProvider message={''}>
+      <AuthProvider>
           <CartProvider>
             <UiProvider>
               <ThemeProvider theme={lightTheme} >
