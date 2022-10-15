@@ -128,7 +128,7 @@ const updateAddress = ( address: ShippingAddress ) => {
 const createOrder = async () => {
 
     if(!state.shippingAddress){
-        throw new Error('No existe direccion para entrga');
+        throw new Error('No existe direccion para entrega');
     }
 
     const body: IOrder = {
