@@ -1,4 +1,5 @@
-import { CartState, ShippingAddress }  from './';
+import { ShippingAddress } from './../../interfaces';
+import { CartState }  from './';
 import { ICartProduct } from "../../interfaces"
 
 

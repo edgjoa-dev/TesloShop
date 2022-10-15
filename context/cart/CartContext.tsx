@@ -18,6 +18,6 @@ interface contextProps{
     updateAddress: (address: ShippingAddress) => void
 
 //Orders
-createOrder: () => Promise<void>
+    createOrder: () => Promise<void>
 }
 export const CartContext = createContext({} as contextProps)

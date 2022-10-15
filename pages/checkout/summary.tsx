@@ -24,7 +24,7 @@ const SummaryPage = () => {
     }, [ router ]);
 
 
-    const onCreateOrder = async() => {
+    const onCreateOrder = () => {
         createOrder();
     }
 
@@ -85,7 +85,7 @@ const SummaryPage = () => {
                         color='secondary'
                         className='circular-btn'
                         fullWidth
-                        onClick={onCreateOrder}
+                        onClick={ onCreateOrder }
                         >
                             Confirmar Compra
                         </Button>

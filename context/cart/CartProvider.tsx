@@ -125,7 +125,7 @@ const updateAddress = ( address: ShippingAddress ) => {
     dispatch({ type: '[Cart] - Update Address', payload: address })
 }
 
-const createOrder = async() => {
+const createOrder = async () => {
 
     if(!state.shippingAddress){
         throw new Error('No existe direccion para entrga');
@@ -144,7 +144,7 @@ const createOrder = async() => {
         isPaid: false
     }
     try {
-        const data = await tesloApi.post('/orders', body)
+        const { data } = await tesloApi.post('/orders', body)
         console.log({data})
 
     } catch (error) {
