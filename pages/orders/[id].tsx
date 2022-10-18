@@ -1,10 +1,14 @@
 import { ShopLayout } from "../../components/layout"
-import { Box, Button, Card, CardContent, Chip, Divider, Grid, Link, Typography } from '@mui/material';
+import { Box, Card, CardContent, Chip, Divider, Grid, Link, Typography } from '@mui/material';
 import { CartList, OrderSummary } from '../../components/cart';
 import NextLink from 'next/link';
-import { CreditCardOffOutlined, CreditScoreOutlined } from "@mui/icons-material";
+import { CreditScoreOutlined } from "@mui/icons-material";
+import { GetServerSideProps, NextPage } from 'next';
 
-const OrderPage = () => {
+
+const OrderPage: NextPage = (props) => {
+
+    console.log({props})
     return (
         <ShopLayout title='Resumen de la compra' pageDescription='Resumen de la compra'>
             <Typography variant='h1' component='h1'>Compra: ABC123456-A</Typography>
@@ -28,7 +32,7 @@ const OrderPage = () => {
             <Grid container sx={{mt: 5}}>
 
                 <Grid item  xs={12} sm={7}>
-                    <CartList />
+                    <CartList editable={false} />
                 </Grid>
 
                 <Grid item  xs={12} sm={5}>
@@ -83,6 +87,18 @@ const OrderPage = () => {
             </Grid>
         </ShopLayout>
     )
+}
+
+
+export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
+
+    const { id='' } = query;
+
+    return {
+        props: {
+            id
+        }
+    }
 }
 
 export default OrderPage;
