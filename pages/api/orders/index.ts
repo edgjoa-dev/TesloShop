@@ -4,13 +4,11 @@ import { db } from '../../../database';
 import { IOrder } from '../../../interfaces';
 import { Product, Order } from '../../../models';
 
-
 type Data =
 | { message: string }
 | IOrder;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-
 
     switch( req.method ) {
         case 'POST':
@@ -18,10 +16,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
         default:
             return res.status(400).json({ message: 'Bad request' })
-
     }
-
-
 }
 
 const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
@@ -51,7 +46,6 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             return (currentPrice * current.quantity) + prev
         }, 0 );
 
-
         const taxRate =  Number(process.env.NEXT_PUBLIC_TAX_RATE || 0);
         const backendTotal = subTotal * ( taxRate + 1 );
 
@@ -61,9 +55,9 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
         // Todo bien hasta este punto
         const userId = session.user._id;
-        console.log(userId)
         const newOrder = new Order({ ...req.body, isPaid: false, user: userId });
         await newOrder.save();
+        await db.disconnect();
 
         return res.status(201).json( newOrder );
 
@@ -74,7 +68,4 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
             message: error.message || 'Revise logs del servidor'
         })
     }
-
-
-    // return res.status(201).json( req.body );
 }
