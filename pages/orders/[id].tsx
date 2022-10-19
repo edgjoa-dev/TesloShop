@@ -15,7 +15,6 @@ interface Props {
 
 const OrderPage: NextPage<Props> = ({order}) => {
 
-    console.log({order})
     const { shippingAddress } = order;
     return (
         <ShopLayout title='Resumen de la compra' pageDescription='Resumen de la compra'>
@@ -86,18 +85,36 @@ const OrderPage: NextPage<Props> = ({order}) => {
                                         </Link>
                                     </NextLink>
                                 </Box>
-                                <OrderSummary />
 
-                            <Box  sx={{mt: 3}}>
-                                <h1>Pagar</h1>
+                                <OrderSummary
+                                    orderValues={{
+                                        numberOfItems: order.numberOfItems,
+                                        subTotal: order.subTotal,
+                                        tax: order.tax,
+                                        total: order.total,
+                                    }}
+                                />
+
+                            <Box  sx={{mt: 3}} display='flex' flexDirection='column'>
+
+                            {
+                                order.isPaid
+                                ?
+                                (
+                                    <Chip
+                                    sx={{ my: 2 }}
+                                    label='Orden Pagada Correctamente'
+                                    variant='outlined'
+                                    color='success'
+                                    icon={ <CreditScoreOutlined /> }
+                                />
+                                )
+                                :
+                                (
+                                <button>Pagar</button>
+                                )
+                            }
                             </Box>
-                            <Chip
-                                sx={{ my: 2 }}
-                                label='Orden Pagada Correctamente'
-                                variant='outlined'
-                                color='success'
-                                icon={ <CreditScoreOutlined /> }
-                            />
 
                         </CardContent>
 
