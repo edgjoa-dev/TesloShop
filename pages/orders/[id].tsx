@@ -4,6 +4,7 @@ import { CartList, OrderSummary } from '../../components/cart';
 import NextLink from 'next/link';
 import { CreditScoreOutlined } from "@mui/icons-material";
 import { GetServerSideProps, NextPage } from 'next';
+import { getSession } from "next-auth/react";
 
 
 const OrderPage: NextPage = (props) => {
@@ -93,10 +94,20 @@ const OrderPage: NextPage = (props) => {
 export const getServerSideProps: GetServerSideProps = async ({ req, query }) => {
 
     const { id='' } = query;
+    const session = await getSession({ req })
+
+    if(!session) {
+        return{
+            redirect: {
+                destination: `/auth/login?p=/orders/${ id }`,
+                permanent: false,
+            }
+        }
+    }
 
     return {
         props: {
-            id
+
         }
     }
 }
