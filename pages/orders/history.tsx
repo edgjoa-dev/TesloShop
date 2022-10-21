@@ -4,6 +4,8 @@ import { ShopLayout } from '../../components/layout/ShopLayout';
 import NextLink from 'next/link';
 import { GetServerSideProps, NextPage } from 'next';
 import { getSession } from 'next-auth/react';
+import { dbOrders } from '../../database';
+import { IOrder } from '../../interfaces';
 
 
     const columns: GridColDef[] = [
@@ -53,12 +55,11 @@ import { getSession } from 'next-auth/react';
     ];
 
     interface Props {
-
+        orders: IOrder[]
     }
 
-const HistoryPage: NextPage<Props> = (props) => {
+const HistoryPage: NextPage<Props> = () => {
 
-    console.log({ props })
 
     return (
         <ShopLayout title='Historial de ordenes' pageDescription='Historial de las ordenes del cliente'>
@@ -80,20 +81,23 @@ const HistoryPage: NextPage<Props> = (props) => {
 
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    const session:any = await getSession({ req });
+
+    const session:any = await getSession({ req })
 
     if(!session){
-        return{
+        return {
             redirect: {
-                destination: '/auth/login?p=/orders/history',
+                destination: 'auth/login?p=/orders/history',
                 permanent: false,
             }
         }
     }
 
+    const orders = await dbOrders.getOrderByUserId(session.user._id);
+
     return {
         props: {
-            id: session.user._id
+            orders
         }
     }
 }
