@@ -6,7 +6,6 @@ import { GetServerSideProps, NextPage } from 'next';
 import { getSession } from 'next-auth/react';
 
 
-
     const columns: GridColDef[] = [
         { field: 'id',        headerName: 'ID',              width: 100 },
         { field: 'fullName',  headerName: 'Nombre Completo', width: 300 },
@@ -53,14 +52,13 @@ import { getSession } from 'next-auth/react';
         { id: 11, paid: false,    fullName: 'Daniela Flores' },
     ];
 
-interface Props {
+    interface Props {
 
-}
-
+    }
 
 const HistoryPage: NextPage<Props> = (props) => {
 
-    console.log({props})
+    console.log({ props })
 
     return (
         <ShopLayout title='Historial de ordenes' pageDescription='Historial de las ordenes del cliente'>
@@ -82,17 +80,16 @@ const HistoryPage: NextPage<Props> = (props) => {
 
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    const session:any = await getSession({ req })
+    const session:any = await getSession({ req });
 
     if(!session){
         return{
             redirect: {
-                destination:'/auth/login?p=/orders/history',
+                destination: '/auth/login?p=/orders/history',
                 permanent: false,
             }
         }
     }
-
 
     return {
         props: {

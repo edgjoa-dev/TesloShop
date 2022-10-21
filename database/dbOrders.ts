@@ -19,11 +19,9 @@ export const getOrderById = async( id: string ): Promise<IOrder | null> => {
     return JSON.parse(JSON.stringify(order));
 
 }
+export const getOrderByUserId = async( userId: string ): Promise<IOrder[]> => {
 
-
-export const getOrderByUser = async( userId: string ): Promise<IOrder[]> => {
-
-    if(!isValidObjectId(userId)) {
+    if(!isValidObjectId){
         return [];
     }
 
@@ -31,6 +29,9 @@ export const getOrderByUser = async( userId: string ): Promise<IOrder[]> => {
     const order = await Order.findById({userId}).lean();
     await db.disconnect();
 
+    if(!order){
+        return [];
+    }
     return JSON.parse(JSON.stringify(order));
 
 }
