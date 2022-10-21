@@ -82,12 +82,12 @@ const HistoryPage: NextPage<Props> = (props) => {
 
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    const session:any = await getSession({req})
+    const session:any = await getSession({ req })
 
     if(!session){
         return{
             redirect: {
-                destination: '/auth/login?p=/orders/history',
+                destination:'/auth/login?p=/orders/history',
                 permanent: false,
             }
         }
@@ -96,7 +96,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 
     return {
         props: {
-            session: session
+            id: session.user._id
         }
     }
 }
