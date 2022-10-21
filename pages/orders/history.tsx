@@ -2,6 +2,8 @@ import { Typography, Grid, Chip, Link } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import { ShopLayout } from '../../components/layout/ShopLayout';
 import NextLink from 'next/link';
+import { GetServerSideProps, NextPage } from 'next';
+import { getSession } from 'next-auth/react';
 
 
 
@@ -51,9 +53,14 @@ import NextLink from 'next/link';
         { id: 11, paid: false,    fullName: 'Daniela Flores' },
     ];
 
+interface Props {
 
-const HistoryPage = () => {
+}
 
+
+const HistoryPage: NextPage<Props> = (props) => {
+
+    console.log({props})
 
     return (
         <ShopLayout title='Historial de ordenes' pageDescription='Historial de las ordenes del cliente'>
@@ -71,6 +78,27 @@ const HistoryPage = () => {
             </Grid>
         </ShopLayout>
     )
+}
+
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+    const session:any = await getSession({req})
+
+    if(!session){
+        return{
+            redirect: {
+                destination: '/auth/login?p=/orders/history',
+                permanent: false,
+            }
+        }
+    }
+
+
+    return {
+        props: {
+            session: session
+        }
+    }
 }
 
 
