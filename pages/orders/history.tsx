@@ -52,9 +52,9 @@ import NextLink from 'next/link';
     ];
 
 
-
-
 const HistoryPage = () => {
+
+
     return (
         <ShopLayout title='Historial de ordenes' pageDescription='Historial de las ordenes del cliente'>
             <Typography variant='h1' component='h1'> Historial de Ordenes </Typography>
@@ -66,13 +66,12 @@ const HistoryPage = () => {
                         columns={ columns }
                         pageSize={ 10 }
                         rowsPerPageOptions={[ 10 ]}
-                    >
-
-                    </DataGrid>
+                    />
                 </Grid>
             </Grid>
         </ShopLayout>
     )
 }
+
 
 export default HistoryPage
