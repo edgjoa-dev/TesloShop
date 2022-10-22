@@ -31,7 +31,7 @@ import { IOrder } from '../../interfaces';
             sortable: false,
             renderCell: ( params: GridValueGetterParams ) => {
                 return (
-                    <NextLink href={`/orders/${params.row.id}`} passHref>
+                    <NextLink href={`/orders/${params.row.orderId}`} passHref>
                         <Link underline='hover'>
                             Ver Orden
                         </Link>
@@ -40,26 +40,21 @@ import { IOrder } from '../../interfaces';
             }
         }
     ];
-    const rows = [
-        { id: 1,  paid: true,   fullName: 'Edgar Flores' },
-        { id: 2,  paid: false,   fullName: 'Joaquin Flores' },
-        { id: 3,  paid: false,   fullName: 'Pedro Flores' },
-        { id: 4,  paid: true,   fullName: 'Juan Flores' },
-        { id: 5,  paid: false,   fullName: 'Melissa Flores' },
-        { id: 6,  paid: true,   fullName: 'Arely Flores' },
-        { id: 7,  paid: false,   fullName: 'Patricia Flores' },
-        { id: 8,  paid: false,   fullName: 'Lourdes Flores' },
-        { id: 9,  paid: true,   fullName: 'Ana Flores' },
-        { id: 10, paid: false,    fullName: 'Guadalupe Flores' },
-        { id: 11, paid: false,    fullName: 'Daniela Flores' },
-    ];
+
 
     interface Props {
         orders: IOrder[]
     }
 
-const HistoryPage: NextPage<Props> = () => {
+    const HistoryPage: NextPage<Props> = ({orders}) => {
 
+        console.log({ orders })
+    const  rows = orders.map((order, idx)=>({
+        id: idx + 1 ,
+        paid: order.isPaid,
+        fullName: `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}`,
+        orderId: order._id,
+    }))
 
     return (
         <ShopLayout title='Historial de ordenes' pageDescription='Historial de las ordenes del cliente'>
