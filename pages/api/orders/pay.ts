@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios, { Axios } from 'axios';
 import { IPaypal } from '../../../interfaces';
+import { Order } from '../../../models';
+import { db } from '../../../database';
 
 type Data = {
     message: string
@@ -66,6 +68,15 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
                 message: 'Orden no encontrada'
             })
         }
+
+        await db.connect();
+        const dbOrder = await Order.findById(orderId);
+
+        if( !dbOrder ) {
+            await db.disconnect();
+            res.status(400).json({ message: 'Orden no encontrada en nuestra base de datos' })
+        }
+
 
 
         return res.status(200).json({ message: paypalBearerToken })
