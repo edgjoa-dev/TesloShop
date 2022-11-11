@@ -51,6 +51,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         if( !paypalBearerToken ){
             return res.status(400).json({ message: 'No se pudo generar el token de paypal' })
         }
+
+        const {transactionId = '', orderId = ''} = req.body;
+
+        const {data} = await axios.get(`${process.env.PAYPAL_ORDERS_URL}/${transactionId}`, {
+            headers: {
+                'Authorization': `Bearer ${paypalBearerToken}`
+            }
+        })
+
+
         return res.status(200).json({ message: paypalBearerToken })
 
 }
