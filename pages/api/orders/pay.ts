@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import axios, { Axios } from 'axios';
+import axios from 'axios';
 import { IPaypal } from '../../../interfaces';
 import { Order } from '../../../models';
 import { db } from '../../../database';
@@ -50,16 +50,18 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
     const  payOrder = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 
+        //ToDo: validar si el susario tiene session activa
+
         const paypalBearerToken = await getPaypalBearerToken();
         if( !paypalBearerToken ){
             return res.status(400).json({ message: 'No se pudo generar el token de paypal' })
         }
 
-        const {transactionId = '', orderId = ''} = req.body;
+        const { transactionId = '', orderId = '' } = req.body;
 
-        const {data} = await axios.get<IPaypal.PaypalOrderStatusResponse>(`${process.env.PAYPAL_ORDERS_URL}/${transactionId}`, {
+        const { data } = await axios.get<IPaypal.PaypalOrderStatusResponse>( `${ process.env.PAYPAL_ORDERS_URL }/${ transactionId }`, {
             headers: {
-                'Authorization': `Bearer ${paypalBearerToken}`
+                'Authorization': `Bearer ${ paypalBearerToken }`
             }
         })
 
@@ -77,8 +79,16 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
             res.status(400).json({ message: 'Orden no encontrada en nuestra base de datos' })
         }
 
+        if(dbOrder!.total !== Number(data.purchase_units[0].amount.value)) {
+            await db.disconnect();
+            return res.status(400).json({ message: 'Los montos entre pago y la base de datos no coinciden' })
+        }
 
+        dbOrder!.transactionId = transactionId;
+        dbOrder!.isPaid = true;
 
-        return res.status(200).json({ message: paypalBearerToken })
+        await db.disconnect();
+
+        return res.status(200).json({ message: 'Orden pagada' })
 
 }

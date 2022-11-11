@@ -129,7 +129,7 @@ return (
                                 onApprove={(data, actions) => {
                                     return actions.order!.capture().then((details) => {
                                         console.log(details)
-                                        const name = details.payer.name.given_name;
+                                        const name = details.payer.name?.given_name;
                                         alert(`Transaction completed by ${name}`);
                                     });
                                 }}
