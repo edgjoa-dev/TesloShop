@@ -1,4 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import axios from 'axios';
 
 type Data = {
     message: string
@@ -16,6 +17,28 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         }
 
     }
+
+    const getPaypalBearerToken = async(): Promise<string | null> => {
+
+        const PAYPAL_CLIENT_ID = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
+        const PAYPAL_SECRET    = process.env.PAYPAL_SECRET;
+
+        const body = new URLSearchParams( 'grant_type=client_credentials' );
+
+        try {
+
+            const {data} = await axios.post(process.env.PAYPAL_OAUTH_URL || '', body, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+
+        } catch (error) {
+
+        }
+
+    }
+
 
     const  payOrder = (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
