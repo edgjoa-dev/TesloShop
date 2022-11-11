@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios, { Axios } from 'axios';
+import { IPaypal } from '../../../interfaces';
 
 type Data = {
     message: string
@@ -54,11 +55,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
         const {transactionId = '', orderId = ''} = req.body;
 
-        const {data} = await axios.get(`${process.env.PAYPAL_ORDERS_URL}/${transactionId}`, {
+        const {data} = await axios.get<IPaypal.PaypalOrderStatusResponse>(`${process.env.PAYPAL_ORDERS_URL}/${transactionId}`, {
             headers: {
                 'Authorization': `Bearer ${paypalBearerToken}`
             }
         })
+
+        if( data.status !== 'COMPLETED' ){
+            return res.status(401).json({
+                message: 'Orden no encontrada'
+            })
+        }
 
 
         return res.status(200).json({ message: paypalBearerToken })
