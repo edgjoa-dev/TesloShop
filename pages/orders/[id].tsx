@@ -15,10 +15,14 @@ interface Props {
     order: IOrder;
 }
 
-
 const OrderPage: NextPage<Props> = ({order}) => {
 
 const { shippingAddress } = order;
+
+const onOrdersComplete = (datils) => {
+    
+};
+
 return (
     <ShopLayout title='Resumen de la compra' pageDescription='Resumen de la compra'>
         <Typography variant='h1' component='h1'># Orden: { order._id }</Typography>
