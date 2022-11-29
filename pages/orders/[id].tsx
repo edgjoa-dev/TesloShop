@@ -15,12 +15,24 @@ interface Props {
     order: IOrder;
 }
 
+export type OrderResponseBody = {
+
+    id: string;
+    status:
+        | "SAVED"
+        | "APPROVED"
+        | "VOIDED"
+        | "COMPLETED"
+        | "PAYER_ACTION_REQUIRED";
+}
+
+
 const OrderPage: NextPage<Props> = ({order}) => {
 
 const { shippingAddress } = order;
 
-const onOrdersComplete = (datils) => {
-    
+const onOrdersComplete = (datils: OrderResponseBody) => {
+
 };
 
 return (
@@ -132,9 +144,10 @@ return (
                                 }}
                                 onApprove={(data, actions) => {
                                     return actions.order!.capture().then((details) => {
-                                        console.log(details)
-                                        const name = details.payer.name?.given_name;
-                                        alert(`Transaction completed by ${name}`);
+                                        onOrdersComplete(details)
+                                        // console.log(details)
+                                        // const name = details.payer.name?.given_name;
+                                        // alert(`Transaction completed by ${name}`);
                                     });
                                 }}
                             />
