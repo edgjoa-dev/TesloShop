@@ -50,7 +50,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
     const  payOrder = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-        //ToDo: validar si el susario tiene session activa
+        //ToDo: validar si el usario tiene session activa
 
         const paypalBearerToken = await getPaypalBearerToken();
         if( !paypalBearerToken ){
@@ -76,16 +76,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
         if( !dbOrder ) {
             await db.disconnect();
-            res.status(400).json({ message: 'Orden no encontrada en nuestra base de datos' })
+            return res.status(400).json({ message: 'Orden no encontrada en nuestra base de datos' })
         }
 
-        if(dbOrder!.total !== Number(data.purchase_units[0].amount.value)) {
+        if(dbOrder.total !== Number(data.purchase_units[0].amount.value)) {
             await db.disconnect();
             return res.status(400).json({ message: 'Los montos entre pago y la base de datos no coinciden' })
         }
 
-        dbOrder!.transactionId = transactionId;
-        dbOrder!.isPaid = true;
+        dbOrder.transactionId = transactionId;
+        dbOrder.isPaid = true;
+        await dbOrder.save();
 
         await db.disconnect();
 

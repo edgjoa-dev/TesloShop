@@ -1,6 +1,7 @@
 import { GetServerSideProps, NextPage } from 'next';
 import { getSession } from "next-auth/react";
 import NextLink from 'next/link';
+import { useRouter } from 'next/router';
 import { PayPalButtons } from "@paypal/react-paypal-js";
 
 import { ShopLayout } from "../../components/layout"
@@ -10,6 +11,7 @@ import { CreditCardOffOutlined, CreditScoreOutlined } from "@mui/icons-material"
 import { CartList, OrderSummary } from '../../components/cart';
 import { dbOrders } from "../../database";
 import { IOrder } from "../../interfaces";
+import { tesloApi } from '../../api';
 
 interface Props {
     order: IOrder;
@@ -19,29 +21,50 @@ export type OrderResponseBody = {
 
     id: string;
     status:
+        | "COMPLETED"
         | "SAVED"
         | "APPROVED"
         | "VOIDED"
-        | "COMPLETED"
         | "PAYER_ACTION_REQUIRED";
 }
 
 
 const OrderPage: NextPage<Props> = ({order}) => {
 
+const router = useRouter();
 const { shippingAddress } = order;
 
-const onOrdersComplete = (datils: OrderResponseBody) => {
 
-};
 
+const onOrderCompleted = async( details: OrderResponseBody ) => {
+
+    if ( details.status !== 'COMPLETED' ) {
+        return alert('No hay pago en Paypal');
+    }
+
+    try {
+
+        const { data } = await tesloApi.post(`/orders/pay`, {
+            transactionId: details.id,
+            orderId: order._id
+        });
+
+        router.reload();
+
+    } catch (error) {
+        console.log(error);
+        alert('Error');
+    }
+
+}
 return (
     <ShopLayout title='Resumen de la compra' pageDescription='Resumen de la compra'>
         <Typography variant='h1' component='h1'># Orden: { order._id }</Typography>
 
         {
             order.isPaid
-            ?(
+            ?
+            (
                 <Chip
                     sx={{ my: 2 }}
                     label='Pagado'
@@ -51,7 +74,8 @@ return (
                 />
 
             )
-            :(
+            :
+            (
 
                 <Chip
                     sx={{ my: 2 }}
@@ -144,9 +168,9 @@ return (
                                 }}
                                 onApprove={(data, actions) => {
                                     return actions.order!.capture().then((details) => {
-                                        onOrdersComplete(details)
-                                        // console.log(details)
-                                        // const name = details.payer.name?.given_name;
+                                        onOrderCompleted( details );
+                                        // console.log({ details  })
+                                        // const name = details.payer.name.given_name;
                                         // alert(`Transaction completed by ${name}`);
                                     });
                                 }}
