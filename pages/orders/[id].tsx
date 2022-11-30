@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import { getSession } from "next-auth/react";
 import NextLink from 'next/link';
@@ -5,7 +6,7 @@ import { useRouter } from 'next/router';
 import { PayPalButtons } from "@paypal/react-paypal-js";
 
 import { ShopLayout } from "../../components/layout"
-import { Box, Card, CardContent, Chip, Divider, Grid, Link, Typography } from '@mui/material';
+import { Box, Card, CardContent, Chip, CircularProgress, Divider, Grid, Link, Typography } from '@mui/material';
 import { CreditCardOffOutlined, CreditScoreOutlined } from "@mui/icons-material";
 
 import { CartList, OrderSummary } from '../../components/cart';
@@ -33,7 +34,7 @@ const OrderPage: NextPage<Props> = ({order}) => {
 
 const router = useRouter();
 const { shippingAddress } = order;
-
+const [isPaying, setIsPaying] = useState(false);
 
 
 const onOrderCompleted = async( details: OrderResponseBody ) => {
@@ -41,6 +42,8 @@ const onOrderCompleted = async( details: OrderResponseBody ) => {
     if ( details.status !== 'COMPLETED' ) {
         return alert('No hay pago en Paypal');
     }
+
+    setIsPaying(true);
 
     try {
 
@@ -52,6 +55,7 @@ const onOrderCompleted = async( details: OrderResponseBody ) => {
         router.reload();
 
     } catch (error) {
+        setIsPaying(false);
         console.log(error);
         alert('Error');
     }
@@ -140,10 +144,19 @@ return (
 
                         <Box  sx={{mt: 3}} display='flex' flexDirection='column'>
 
+                            <Box
+                                display='flex'
+                                justifyContent='center'
+                                className='fadeIn'
+                                sx={{ display: isPaying ? 'flex' : 'none'}}
+                            >
+                                <CircularProgress />
+                            </Box>
+
+                    <Box flexDirection='column' sx={{ display: isPaying ? 'none' : 'flex', flex: 1}}>
                         {
                             order.isPaid
-                            ?
-                            (
+                            ? (
                                 <Chip
                                 sx={{ my: 2 }}
                                 label='Orden Pagada Correctamente'
@@ -151,9 +164,7 @@ return (
                                 color='success'
                                 icon={ <CreditScoreOutlined /> }
                             />
-                            )
-                            :
-                            (
+                            ) : (
                             <PayPalButtons
                                 createOrder={(data, actions) => {
                                     return actions.order.create({
@@ -177,6 +188,8 @@ return (
                             />
                             )
                         }
+                    </Box>
+
                         </Box>
 
                     </CardContent>

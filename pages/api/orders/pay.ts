@@ -51,6 +51,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
     const  payOrder = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 
         //ToDo: validar si el usario tiene session activa
+        //ToDo: validar si es un MongoId
 
         const paypalBearerToken = await getPaypalBearerToken();
         if( !paypalBearerToken ){
