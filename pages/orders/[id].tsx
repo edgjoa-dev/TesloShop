@@ -67,7 +67,7 @@ return (
             (
                 <Chip
                     sx={{ my: 2 }}
-                    label='Pagado'
+                    label='Pago Éxitoso'
                     variant='outlined'
                     color='success'
                     icon={ <CreditScoreOutlined /> }
