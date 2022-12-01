@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 
 import { Grid, Typography } from '@mui/material';
@@ -15,6 +16,19 @@ const DashBoardPage = () => {
     const {data, error} = useSWR<DashboardSummaryResponse>('/api/admin/dashboard', {
         refreshInterval: 30 * 1000 // 30 seconds
     })
+
+    const [refreshIn, setRefreshIn] = useState(30)
+
+    useEffect(() => {
+    const interval = setInterval(() =>{
+        setRefreshIn( refreshIn => refreshIn > 0 ? refreshIn - 1 : 30 );
+    }, 1000)
+
+        return () => clearInterval(interval)
+    }, [])
+
+
+
 
     if(!error && !data){
         return <></>
@@ -88,7 +102,7 @@ const DashBoardPage = () => {
                 />
 
                 <SummaryTile
-                    title={ 30 }
+                    title={ refreshIn }
                     subTitle="Actualización en vivo: "
                     icon={ <AccessTimeOutlined color="secondary" sx={{ fontSize: 40 }} /> }
                 />
