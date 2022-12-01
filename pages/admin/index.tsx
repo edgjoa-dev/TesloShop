@@ -22,7 +22,7 @@ const DashBoardPage = () => {
     useEffect(() => {
     const interval = setInterval(() =>{
         setRefreshIn( refreshIn => refreshIn > 0 ? refreshIn - 1 : 30 );
-    }, 1000)
+    }, 1000);
 
         return () => clearInterval(interval)
     }, [])
@@ -103,7 +103,7 @@ const DashBoardPage = () => {
 
                 <SummaryTile
                     title={ refreshIn }
-                    subTitle="Actualización en vivo: "
+                    subTitle="Actualización en vivo"
                     icon={ <AccessTimeOutlined color="secondary" sx={{ fontSize: 40 }} /> }
                 />
 

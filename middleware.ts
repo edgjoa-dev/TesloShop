@@ -16,7 +16,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL(`/auth/login?p=${requestedPage}`, req.url));
     }
 
-    const validRoles = ['admin'];
+    const validRoles = ['admin','super-user', 'SEO'];
     if (req.nextUrl.pathname.startsWith('/admin')) {
     if (!validRoles.includes(session.user.role)) {
         return NextResponse.redirect(new URL('/', req.url));
