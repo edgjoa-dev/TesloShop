@@ -1,4 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { db } from '../../../database';
+import { Order, Product, User } from '../../../models';
 
 type Data = {
     numberOfOrders: number;
@@ -13,7 +15,23 @@ type Data = {
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 
     await db.connect();
+
+        const numberOfOrders = await Order.count();
+        const paidOrders = await Order.find({ isPaid: true }).count();
+        const numberOfClients = await User.find({ role: 'client' }).count();
+        const numberOfProducts = await Product.count();
+        const productsWithNoInventory = await Product.find({ inStock: 0 }).count();
+        const lowInventory = await Product.find({ inStock: {$let: 10} }).count();
+
     await db.disconnect();
 
-    res.status(200).json({ })
+        res.status(200).json({
+            numberOfOrders,
+            paidOrders,
+            numberOfClients,
+            numberOfProducts,
+            productsWithNoInventory,
+            lowInventory,
+            notPaidOrders: numberOfOrders - paidOrders,
+        })
 }
