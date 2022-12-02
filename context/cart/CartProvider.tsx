@@ -4,7 +4,7 @@ import Cookie from 'js-cookie'
 import { ICartProduct, IOrder, ShippingAddress } from '../../interfaces';
 import {  CartContext, cartReducer } from './';
 import { tesloApi } from '../../api';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 type Props = {
     children: React.ReactNode;
@@ -155,10 +155,11 @@ const createOrder = async():Promise<{ hasError: boolean; message: string; }> => 
         }
 
     } catch (error) {
-        if( axios.isAxiosError(error)){
-            return{
+        if ( axios.isAxiosError(error) ) {
+            const {message} = error.response?.data as { message: string}
+            return {
                 hasError: true,
-                message: error.response?.data.message
+                message,
             }
         }
         return {

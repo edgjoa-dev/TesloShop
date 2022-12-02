@@ -18,7 +18,8 @@ export interface IOrder {
 
     transactionId?: string;
 
-    createdAt: string;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
 
