@@ -26,16 +26,18 @@ const UsersPage = () => {
 
     const onRoleUpdated = async( userId: string, newRole: string ) => {
 
-        const updaatedUsers = users.map( user =>({
+        const previosUsers = users.map( user =>({ ...user }));
+        const updatedUsers = users.map( user =>({
             ...user,
             role: userId === user._id ? newRole : user.role
         }))
 
-        setUsers(updaatedUsers);
+        setUsers(updatedUsers);
 
         try {
             await tesloApi.put('/admin/users', { userId, role: newRole });
         } catch (error) {
+            setUsers(previosUsers);
             console.log(error)
             alert('No se pudo actualizar el role del usuario');
         }
