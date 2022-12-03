@@ -34,12 +34,16 @@ interface Props {
 
 const ProductAdminPage:FC<Props> = ({ product }) => {
 
-    const { register, handleSubmit, formState:{errors} } = useForm({
+    const { register, handleSubmit, formState:{errors} } = useForm<FormData>({
         defaultValues: product
     })
 
     const onDeleteTag = ( tag: string ) => {
 
+    }
+
+    const onSubmit = (form: FormData)=> {
+        console.log({form})
     }
 
     return (
@@ -48,7 +52,7 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
             subTitle={`Editando: ${ product.title }`}
             icon={ <DriveFileRenameOutline /> }
         >
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <Box display='flex' justifyContent='end' sx={{ mb: 1 }}>
                     <Button
                         color="secondary"
@@ -69,12 +73,12 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
                             variant="filled"
                             fullWidth
                             sx={{ mb: 1 }}
-                            // { ...register('name', {
-                            //     required: 'Este campo es requerido',
-                            //     minLength: { value: 2, message: 'Mínimo 2 caracteres' }
-                            // })}
-                            // error={ !!errors.name }
-                            // helperText={ errors.name?.message }
+                            { ...register('title', {
+                                required: 'Este campo es requerido',
+                                minLength: { value: 2, message: 'Mínimo 2 caracteres' }
+                            })}
+                            error={ !!errors.title }
+                            helperText={ errors.title?.message }
                         />
 
                         <TextField
@@ -83,6 +87,11 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
                             fullWidth
                             multiline
                             sx={{ mb: 1 }}
+                            { ...register('description', {
+                                required: 'Este campo es requerido',
+                            })}
+                            error={ !!errors.description }
+                            helperText={ errors.description?.message }
                         />
 
                         <TextField
@@ -91,6 +100,12 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
                             variant="filled"
                             fullWidth
                             sx={{ mb: 1 }}
+                            { ...register('inStock', {
+                                required: 'Este campo es requerido',
+                                min: { value: 0, message: 'Mínimo de valor cero' }
+                            })}
+                            error={ !!errors.inStock }
+                            helperText={ errors.inStock?.message }
                         />
 
                         <TextField
@@ -99,6 +114,12 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
                             variant="filled"
                             fullWidth
                             sx={{ mb: 1 }}
+                            { ...register('inStock', {
+                                required: 'Este campo es requerido',
+                                min: { value: 0, message: 'Mínimo de valor cero' }
+                            })}
+                            error={ !!errors.inStock }
+                            helperText={ errors.inStock?.message }
                         />
 
                         <Divider sx={{ my: 1 }} />
@@ -161,6 +182,12 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
                             variant="filled"
                             fullWidth
                             sx={{ mb: 1 }}
+                            { ...register('slug', {
+                                required: 'Este campo es requerido',
+                                validate: (val)=> val.trim().includes(' ') ? 'No puede tenr espacios en blanco' : undefined
+                            })}
+                            error={ !!errors.slug }
+                            helperText={ errors.slug?.message }
                         />
 
                         <TextField
