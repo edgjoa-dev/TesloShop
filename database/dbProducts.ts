@@ -15,6 +15,9 @@ export const getProductBySlug = async( slug: string): Promise<IProducts | null> 
         return null;
     }
 
+
+    //TODO: Procesamiento de imagenes al subir al server
+
     return JSON.parse(JSON.stringify(product));
 
 }
