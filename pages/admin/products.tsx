@@ -1,7 +1,7 @@
 import  React  from "react";
 import { AdminLayout } from '../../components/layout/AdminLayout';
-import { ConfirmationNumberOutlined } from '@mui/icons-material';
-import { Grid, Chip } from '@mui/material';
+import {  CategoryOutlined } from '@mui/icons-material';
+import { Grid } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import useSWR from 'swr';
 import { IProducts } from "../../interfaces";
@@ -40,7 +40,7 @@ const ProductPage =  () => {
         <AdminLayout
             title={`Productos ${data?.length}`}
             subTitle={'Mantenimiento de productos'}
-            icon={ <ConfirmationNumberOutlined /> }
+            icon={ <CategoryOutlined /> }
         >
         <Grid container className="fadeIn">
             <Grid item xs={12} sx={{ height:650, width:'100%'}}>
