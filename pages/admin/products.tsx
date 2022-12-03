@@ -1,13 +1,28 @@
 import  React  from "react";
 import { AdminLayout } from '../../components/layout/AdminLayout';
 import {  CategoryOutlined } from '@mui/icons-material';
-import { Grid } from '@mui/material';
+import { Grid, CardMedia } from '@mui/material';
 import { DataGrid, GridColDef, GridValueGetterParams } from '@mui/x-data-grid';
 import useSWR from 'swr';
 import { IProducts } from "../../interfaces";
 
 const columns: GridColDef[] = [
-    { field: 'img', headerName: 'Foto' },
+    {
+        field: 'img',
+        headerName: 'Foto',
+        renderCell: ( {row}:GridValueGetterParams  )=>{
+            return(
+                <a href={ `/product/${row.slug}` } target="_blank" rel="noreferrer">
+                    <CardMedia
+                        component='img'
+                        className="fadeIn"
+                        alt={`row.title`}
+                        image={ ` /products/${row.img}` }
+                    />
+                </a>
+            )
+        }
+    },
     { field: 'title', headerName: 'title', width: 250 },
     { field: 'gender', headerName: 'Género' },
     { field: 'type', headerName: 'Tipo' },
@@ -32,7 +47,8 @@ const ProductPage =  () => {
         type: product.type,
         inStock: product.inStock,
         price: product.price,
-        sizes: product.sizes,
+        sizes: product.sizes.join(', '),
+        slug: product.slug,
     }))
 
 
