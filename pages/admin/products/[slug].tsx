@@ -38,6 +38,15 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
         defaultValues: product
     })
 
+    const onChangesSize = (size: string) => {
+        const currentSizes = getValues('sizes')
+        if( currentSizes.includes(size) ){
+            return setValue( 'sizes', currentSizes.filter(s => s !== size ), { shouldValidate: true } )
+        }
+
+        setValue( 'sizes', [...currentSizes, size], {  shouldValidate: true } );
+    }
+
     const onDeleteTag = ( tag: string ) => {
 
     }
@@ -45,6 +54,7 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
     const onSubmit = (form: FormData)=> {
         console.log({form})
     }
+
 
     return (
         <AdminLayout
@@ -168,7 +178,12 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
                             <FormLabel>Tallas</FormLabel>
                             {
                                 validSizes.map(size => (
-                                    <FormControlLabel key={size} control={<Checkbox />} label={ size } />
+                                    <FormControlLabel
+                                        key={size}
+                                        control={<Checkbox checked={getValues('sizes').includes(size)}/>}
+                                        label={ size }
+                                        onChange={()=> onChangesSize(size)}
+                                    />
                                 ))
                             }
                         </FormGroup>
