@@ -1,8 +1,11 @@
 import React, { FC } from 'react'
+import { useForm } from 'react-hook-form';
 import { GetServerSideProps } from 'next'
+
 import { DriveFileRenameOutline, SaveOutlined, UploadOutlined } from '@mui/icons-material';
-import { dbProducts } from '../../../database';
 import { Box, Button, capitalize, Card, CardActions, CardMedia, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, ListItem, Paper, Radio, RadioGroup, TextField } from '@mui/material';
+
+import { dbProducts } from '../../../database';
 import { IProducts } from '../../../interfaces';
 import { AdminLayout } from '../../../components/layout';
 
@@ -11,11 +14,29 @@ const validTypes  = ['shirts','pants','hoodies','hats']
 const validGender = ['men','women','kid','unisex']
 const validSizes = ['XS','S','M','L','XL','XXL','XXXL']
 
+interface FormData {
+    _id?       : string;
+    description: string;
+    images     : string[];
+    inStock    : number;
+    price      : number;
+    sizes      : string[];
+    slug       : string;
+    tags       : string[];
+    title      : string;
+    type       : string;
+    gender     : string;
+}
+
 interface Props {
     product: IProducts;
 }
 
 const ProductAdminPage:FC<Props> = ({ product }) => {
+
+    const { register, handleSubmit, formState:{errors} } = useForm({
+        defaultValues: product
+    })
 
     const onDeleteTag = ( tag: string ) => {
 
