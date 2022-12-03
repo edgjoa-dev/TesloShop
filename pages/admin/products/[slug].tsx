@@ -8,6 +8,7 @@ import { Box, Button, capitalize, Card, CardActions, CardMedia, Checkbox, Chip, 
 import { dbProducts } from '../../../database';
 import { IProducts } from '../../../interfaces';
 import { AdminLayout } from '../../../components/layout';
+import { useEffect } from 'react';
 
 
 const validTypes  = ['shirts','pants','hoodies','hats']
@@ -34,9 +35,26 @@ interface Props {
 
 const ProductAdminPage:FC<Props> = ({ product }) => {
 
-    const { register, handleSubmit, formState:{errors},  getValues, setValue } = useForm<FormData>({
+    const { register, handleSubmit, formState:{errors},  getValues, setValue, watch } = useForm<FormData>({
         defaultValues: product
     })
+
+    useEffect(() => {
+        const subcription = watch( ( value, { name, type } )=> {
+            console.log({ value, name, type })
+            if( name === 'title' ){
+                const newSlug = value.title?.trim()
+                .replaceAll(' ', '_')
+                .replaceAll("'", '')
+                .toLowerCase() || '';
+
+                setValue('slug', newSlug);
+            }
+        })
+
+        return()=> subcription.unsubscribe();
+    }, [setValue, watch])
+
 
     const onChangesSize = (size: string) => {
         const currentSizes = getValues('sizes')
