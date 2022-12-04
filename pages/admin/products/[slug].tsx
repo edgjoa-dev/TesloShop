@@ -10,6 +10,9 @@ import { IProducts } from '../../../interfaces';
 import { AdminLayout } from '../../../components/layout';
 import { useEffect } from 'react';
 import { tesloApi } from '../../../api';
+import { IProducts } from '../../../interfaces/products';
+import { Product } from '../../../models';
+import { useRouter } from 'next/router';
 
 
 const validTypes  = ['shirts','pants','hoodies','hats']
@@ -36,12 +39,14 @@ interface Props {
 
 const ProductAdminPage:FC<Props> = ({ product }) => {
 
+    const router = useRouter()
+    const [newTagValue, setNewTagValue] = useState('')
+    const [isSaving, setIsSaving] = useState(false)
+
     const { register, handleSubmit, formState:{errors},  getValues, setValue, watch } = useForm<FormData>({
         defaultValues: product
     })
 
-    const [newTagValue, setNewTagValue] = useState('')
-    const [isSaving, setIsSaving] = useState(false)
 
     useEffect(() => {
         const subcription = watch( ( value, { name, type } )=> {
@@ -95,13 +100,13 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
 
             const {data} = await tesloApi({
                 url: '/admin/products',
-                method: 'PUT',
+                method: form._id ? 'PUT' : 'POST',
                 data: form
             })
 
             console.log({data});
             if( !form._id ){
-                //TODO: recargar el navegador
+                router.replace(`/admin/products/${ form.slug }`)
             }else {
                 setIsSaving(false)
             }
@@ -359,7 +364,19 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
 
     const { slug = ''} = query;
 
-    const product = await dbProducts.getProductBySlug(slug.toString());
+    let product: IProducts | null;
+
+    if( slug === 'new' ){
+
+        const tempProduct = JSON.parse( JSON.stringify( new Product() ) );
+        delete tempProduct._id;
+        tempProduct.images = [ 'img1.jpg', 'img2.jpg' ];
+        product = tempProduct;
+
+    }else {
+        product = await dbProducts.getProductBySlug(slug.toString());
+    }
+
 
     if ( !product ) {
         return {
