@@ -2,13 +2,14 @@ import React, { FC, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { GetServerSideProps } from 'next'
 
-import { DriveFileRenameOutline, SaveOutlined, UploadOutlined } from '@mui/icons-material';
+import { DriveFileRenameOutline, RemoveFromQueue, SaveOutlined, UploadOutlined } from '@mui/icons-material';
 import { Box, Button, capitalize, Card, CardActions, CardMedia, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, ListItem, Paper, Radio, RadioGroup, TextField } from '@mui/material';
 
 import { dbProducts } from '../../../database';
 import { IProducts } from '../../../interfaces';
 import { AdminLayout } from '../../../components/layout';
 import { useEffect } from 'react';
+import { tesloApi } from '../../../api';
 
 
 const validTypes  = ['shirts','pants','hoodies','hats']
@@ -40,6 +41,7 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
     })
 
     const [newTagValue, setNewTagValue] = useState('')
+    const [isSaving, setIsSaving] = useState(false)
 
     useEffect(() => {
         const subcription = watch( ( value, { name, type } )=> {
@@ -83,8 +85,32 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
         setValue('tags', updatedTags, { shouldValidate: true })
     }
 
-    const onSubmit = (form: FormData)=> {
-        console.log({form})
+    const onSubmit = async(form: FormData)=> {
+
+        if( form.images.length < 2 ) return alert('Debe cargar al menos 2 imagenes del producto')
+
+        setIsSaving(true)
+
+        try {
+
+            const {data} = await tesloApi({
+                url: '/admin/products',
+                method: 'PUT',
+                data: form
+            })
+
+            console.log({data});
+            if( !form._id ){
+                //TODO: recargar el navegador
+            }else {
+                setIsSaving(false)
+            }
+
+        } catch (error) {
+            console.log(error)
+            setIsSaving(false)
+        }
+
     }
 
 
@@ -101,6 +127,7 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
                         startIcon={ <SaveOutlined /> }
                         sx={{ width: '150px' }}
                         type="submit"
+                        disabled={ isSaving }
                         >
                         Guardar
                     </Button>
