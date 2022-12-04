@@ -18,7 +18,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
             case 'PUT':
             return updateProducts(req, res);
 
-        case 'POST':
+            case 'POST':
+            return crateProduct(req, res);
 
         default:
             res.status(200).json({ message: 'Example' })
@@ -75,10 +76,38 @@ const updateProducts = async(req: NextApiRequest, res: NextApiResponse<Data>) =>
         await db.disconnect();
 
         return res.status(400).json({ message: 'Favor de validar los logs de la consola' });
+
     }
-
-
-
 }
 
- 
+const  crateProduct = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
+
+    const { images = [] } = req.body as IProducts;
+
+    if( images.length < 2 ) {
+        return res.status(400).json({ message: 'Es necesario cargar almenos 2 imagenes' })
+    }
+
+    try {
+
+        await db.connect();
+        const productInDB = await Product.findOne({ slug: req.body.slug});
+        if( productInDB ) {
+            await db.disconnect();
+            return res.status(400).json({ message: 'Ya existe un producto con ese slug' })
+        }
+
+        const product = new Product(req.body);
+        await product.save();
+        await db.disconnect();
+
+        res.status(201).json(product)
+
+    } catch (error) {
+        console.log(error);
+        await db.disconnect();
+
+        return res.status(400).json({ message: 'Favor de validar los logs de la consola' });
+    }
+}
+
