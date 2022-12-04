@@ -79,7 +79,8 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
     }
 
     const onDeleteTag = ( tag: string ) => {
-
+        const updatedTags = getValues('tags').filter( t => t !== tag );
+        setValue('tags', updatedTags, { shouldValidate: true })
     }
 
     const onSubmit = (form: FormData)=> {
