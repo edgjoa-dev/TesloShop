@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { GetServerSideProps } from 'next'
 
@@ -39,9 +39,10 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
         defaultValues: product
     })
 
+    const [newTagValue, setNewTagValue] = useState('')
+
     useEffect(() => {
         const subcription = watch( ( value, { name, type } )=> {
-            console.log({ value, name, type })
             if( name === 'title' ){
                 const newSlug = value.title?.trim()
                 .replaceAll(' ', '_')
@@ -63,6 +64,18 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
         }
 
         setValue( 'sizes', [...currentSizes, size], {  shouldValidate: true } );
+    }
+
+    const onNewTag = ( ) => {
+        const newTag = newTagValue.trim().toLowerCase();
+        setNewTagValue('');
+        const currentTags = getValues('tags')
+        if( currentTags.includes(newTag) ){
+            return;
+        }
+
+        currentTags.push(newTag);
+
     }
 
     const onDeleteTag = ( tag: string ) => {
@@ -229,6 +242,9 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
                             fullWidth
                             sx={{ mb: 1 }}
                             helperText="Presiona [spacebar] para agregar"
+                            value={newTagValue}
+                            onChange={ ({target})=> setNewTagValue(target.value) }
+                            onKeyUp={ ({ code })=> code === 'Space' ? onNewTag() : undefined}
                         />
 
                         <Box sx={{
@@ -240,7 +256,7 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
                         }}
                         component="ul">
                             {
-                                product.tags.map((tag) => {
+                                getValues('tags').map((tag) => {
 
                                 return (
                                     <Chip
