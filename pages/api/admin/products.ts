@@ -2,10 +2,12 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { db } from '../../../database';
 import { IProducts } from '../../../interfaces/products';
 import Product from '../../../models/Product';
+import { isValidObjectId } from 'mongoose';
 
 type Data =
 | { message: string }
 | IProducts[]
+| IProducts
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 
@@ -13,9 +15,9 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
         case 'GET':
             return getProducts(req, res);
 
-            break;
+            case 'PUT':
+            return updateProducts(req, res);
 
-        case 'PUT':
         case 'POST':
 
         default:
@@ -38,3 +40,44 @@ const  getProducts = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
     res.status(200).json(products)
 
 }
+
+
+const updateProducts = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
+
+    const { _id='', images = [] } = req.body;
+
+    if( !isValidObjectId(_id) ){
+        return res.status(404).json({ message: 'El Id del producto nos es válido' });
+    }
+
+    if( images.length <= 2 ) {
+        return res.status(400).json({ message: 'Es necesario cargar almenos 2 imagenes' })
+    }
+
+    try {
+
+        await db.connect();
+        const product = await Product.findById(_id);
+        if( !product ){
+            await db.disconnect();
+            return res.status(400).json({ message: 'El producto nos es válido' });
+        }
+
+        //TODO: eliminar fotos en cloudinary
+
+        await product.update(req.body)
+        await db.disconnect();
+
+        return res.status(200).json( product )
+
+    } catch (error) {
+        console.log(error);
+        await db.disconnect();
+
+        return res.status(400).json({ message: 'Favor de validar los logs de la consola' });
+    }
+
+
+
+}
+
