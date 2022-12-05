@@ -109,6 +109,14 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
         }
     }
 
+    const onDeleteImage = ( image: string )=> {
+        setValue(
+            'images',
+            getValues('images').filter(img => img !== image),
+            {shouldValidate: true}
+        )
+    }
+
 
     const onSubmit = async(form: FormData)=> {
 
@@ -360,11 +368,15 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
                                                 <CardMedia
                                                     component='img'
                                                     className='fadeIn'
-                                                    image={ `/products/${ img }` }
+                                                    image={ img }
                                                     alt={ img }
                                                 />
                                                 <CardActions>
-                                                    <Button fullWidth color="error">
+                                                    <Button
+                                                        fullWidth
+                                                        color="error"
+                                                        onClick={()=> onDeleteImage(img)}
+                                                    >
                                                         Borrar
                                                     </Button>
                                                 </CardActions>

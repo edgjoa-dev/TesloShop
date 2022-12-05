@@ -4,6 +4,12 @@ import { IProducts } from '../../../interfaces/products';
 import Product from '../../../models/Product';
 import { isValidObjectId } from 'mongoose';
 
+
+import { v2 as cloudinary } from 'cloudinary'
+
+cloudinary.config( process.env.CLOUDINARY_URL ||'' );
+
+
 type Data =
 | { message: string }
 | IProducts[]
@@ -65,6 +71,15 @@ const updateProducts = async(req: NextApiRequest, res: NextApiResponse<Data>) =>
         }
 
         //TODO: eliminar fotos en cloudinary
+        //src="https://res.cloudinary.com/sdafkjsdkjhsdf/image/upload/v1670274567/teslo-shop/sg6jyqqlcufndzq2zrsj.jpg"
+        product.images.forEach( async( image ) => {
+            if( !images.includes( image ) ){
+                //Borarr en cloudianry
+                const  [ fileId, extension ] = image.substring( image.lastIndexOf('/') + 1 ).split('.')
+                console.log({ image, fileId, extension })
+                await cloudinary.uploader.destroy( fileId )
+            }
+        })
 
         await product.update(req.body)
         await db.disconnect();
