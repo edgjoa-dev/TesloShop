@@ -99,11 +99,9 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
 
             for( const file of target.files ){
                 const formData = new FormData();
-                console.log(file)
                 formData.append('file', file);
                 const {data} = await tesloApi.post<{message: string}>('/admin/upload', formData);
-                console.log(data);
-
+                setValue('images', [...getValues('images'), data.message], {shouldValidate: true})
             }
 
         } catch (error) {
@@ -348,7 +346,7 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
                             />
 
                             <Chip
-                                label="Es necesario al 2 imagenes"
+                                label="Es necesario al menos 2 imagenes"
                                 color='error'
                                 variant='outlined'
                                 sx={{ mb: 3 }}
@@ -356,7 +354,7 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
 
                             <Grid container spacing={2}>
                                 {
-                                    product.images.map( img => (
+                                    getValues('images').map( img => (
                                         <Grid item xs={4} sm={3} key={img}>
                                             <Card>
                                                 <CardMedia
