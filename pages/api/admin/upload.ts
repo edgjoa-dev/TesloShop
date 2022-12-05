@@ -28,18 +28,21 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
 }
 
-const saveFile = async( file: formidable.File ) => {
+const saveFile = async( file: formidable.File ): Promise<string> => {
     // const data = fs.readFileSync( file.filepath);
     // fs.writeFileSync( `./public/${ file.originalFilename }`, data);
     // fs.unlinkSync( file.filepath );
     // return;
 
-    const data =  await cloudinary.uploader.upload( file.filepath )
-    console.log(data);
+    const {secure_url} =  await cloudinary.uploader.upload( file.filepath, {
+        folder: 'teslo-shop'
+    } )
+    console.log({secure_url});
+    return secure_url;
 
 }
 
-    const parseFiles = async( req: NextApiRequest ) => {
+    const parseFiles = async( req: NextApiRequest ): Promise<string> => {
 
         return new Promise((resolve, reject ) => {
 
@@ -51,16 +54,15 @@ const saveFile = async( file: formidable.File ) => {
                     return reject( err );
                 }
 
-                await saveFile( files.file as formidable.File )
-                resolve(true);
+                const filePath = await saveFile( files.file as formidable.File )
+                resolve(filePath);
             })
 
         })
     }
 
 const uploadFile = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
-    console.log('request')
-    await parseFiles(req);
+    const imageURL = await parseFiles(req);
 
-    return res.status(200).json({ message: 'Imagen cargada correctamente'});
+    return res.status(200).json({ message: imageURL});
 }
