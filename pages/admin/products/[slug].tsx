@@ -49,19 +49,18 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
 
 
     useEffect(() => {
-        const subcription = watch( ( value, { name, type } )=> {
-            if( name === 'title' ){
+        const subscription = watch(( value, { name, type } ) => {
+            if ( name === 'title' ) {
                 const newSlug = value.title?.trim()
                 .replaceAll(' ', '_')
                 .replaceAll("'", '')
-                .toLowerCase() || '';
+                .toLocaleLowerCase() || '';
 
                 setValue('slug', newSlug);
             }
-        })
-
-        return()=> subcription.unsubscribe();
-    }, [setValue, watch])
+        });
+        return () => subscription.unsubscribe();
+    }, [watch, setValue])
 
 
     const onChangesSize = (size: string) => {
@@ -94,11 +93,13 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
         if(!target.files || target.files.length === 0){
             return;
         }
+        console.log(target.files)
 
         try {
 
             for( const file of target.files ){
                 const formData = new FormData();
+                console.log(file)
                 formData.append('file', file);
                 const {data} = await tesloApi.post<{message: string}>('/admin/upload', formData);
                 console.log(data);
@@ -114,8 +115,7 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
     const onSubmit = async(form: FormData)=> {
 
         if( form.images.length < 2 ) return alert('Debe cargar al menos 2 imagenes del producto')
-
-        setIsSaving(true)
+            setIsSaving(true)
 
         try {
 
@@ -209,12 +209,12 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
                             variant="filled"
                             fullWidth
                             sx={{ mb: 1 }}
-                            { ...register('inStock', {
+                            { ...register('price', {
                                 required: 'Este campo es requerido',
                                 min: { value: 0, message: 'Mínimo de valor cero' }
                             })}
-                            error={ !!errors.inStock }
-                            helperText={ errors.inStock?.message }
+                            error={ !!errors.price }
+                            helperText={ errors.price?.message }
                         />
 
                         <Divider sx={{ my: 1 }} />
@@ -342,7 +342,7 @@ const ProductAdminPage:FC<Props> = ({ product }) => {
                                 ref={fileInputRef}
                                 type="file"
                                 multiple
-                                accept='image/png, image/gif, image/jpeg,'
+                                accept='image/png, image/gif, image/jpeg, image/jpg'
                                 style={ { display: 'none' } }
                                 onChange={ onFilesSelected }
                             />

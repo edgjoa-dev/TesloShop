@@ -1,10 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import formidable from 'formidable'
-import fs from 'fs'
 
 import { v2 as cloudinary } from 'cloudinary'
 
-cloudinary.config( process.env.CLOUDINARY_URL ||'' )
+cloudinary.config( process.env.CLOUDINARY_URL ||'' );
 
 
 type Data = {
@@ -21,7 +20,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
     switch (req.method) {
         case 'POST':
-            return uploadFile( req, res )
+            return uploadFile( req, res );
 
         default:
             res.status(400).json({ message: 'Bad request' })
@@ -60,7 +59,7 @@ const saveFile = async( file: formidable.File ) => {
     }
 
 const uploadFile = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
-
+    console.log('request')
     await parseFiles(req);
 
     return res.status(200).json({ message: 'Imagen cargada correctamente'});

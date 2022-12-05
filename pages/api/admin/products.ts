@@ -45,14 +45,14 @@ const  getProducts = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 
 const updateProducts = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 
-    const { _id='', images = [] } = req.body;
+    const { _id='', images = [] } = req.body as IProducts;
 
     if( !isValidObjectId(_id) ){
         return res.status(404).json({ message: 'El Id del producto nos es válido' });
     }
 
     if( images.length < 2 ) {
-        return res.status(400).json({ message: 'Es necesario cargar almenos 2 imagenes' })
+        return res.status(400).json({ message: 'Es necesario cargar almenos 2 imágenes' })
     }
 
     try {
