@@ -1,12 +1,13 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { db } from '../../../database';
-import { IProducts } from '../../../interfaces/products';
-import Product from '../../../models/Product';
 import { isValidObjectId } from 'mongoose';
+
+import { db } from '../../../database';
+import Product from '../../../models/Product';
+import { IProducts } from '../../../interfaces/products';
+
 
 
 import { v2 as cloudinary } from 'cloudinary'
-
 cloudinary.config( process.env.CLOUDINARY_URL ||'' );
 
 
@@ -18,7 +19,7 @@ type Data =
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
 
     switch (req.method) {
-        case 'GET':
+            case 'GET':
             return getProducts(req, res);
 
             case 'PUT':
@@ -36,12 +37,12 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Data>)
 
 const  getProducts = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 
+    await db.connect();
 
-    db.connect();
     const products = await Product.find()
     .sort({ title: 'asc' })
     .lean()
-    db.disconnect();
+    await db.disconnect();
 
     //TODO: actualizar las imagenes
     res.status(200).json(products)
@@ -65,35 +66,40 @@ const updateProducts = async(req: NextApiRequest, res: NextApiResponse<Data>) =>
 
         await db.connect();
         const product = await Product.findById(_id);
-        if( !product ){
+
+        if ( !product ) {
             await db.disconnect();
-            return res.status(400).json({ message: 'El producto nos es válido' });
+            return res.status(400).json({ message: 'No existe un producto con ese ID' });
         }
 
-        //TODO: eliminar fotos en cloudinary
-        //src="https://res.cloudinary.com/sdafkjsdkjhsdf/image/upload/v1670274567/teslo-shop/sg6jyqqlcufndzq2zrsj.jpg"
-        product.images.forEach( async( image ) => {
-            if( !images.includes( image ) ){
-                //Borarr en cloudianry
-                const  [ fileId, extension ] = image.substring( image.lastIndexOf('/') + 1 ).split('.')
-                console.log({ image, fileId, extension })
-                await cloudinary.uploader.destroy( fileId )
+        // TODO: eliminar fotos en Cloudinary
+        // https://res.cloudinary.com/cursos-udemy/image/upload/v1645914028/nct31gbly4kde6cncc6i.jpg
+        product.images.forEach( async(image) => {
+            if ( !images.includes(image) ){
+                // Borrar de cloudinary
+                const [ images, fileId, extension ] = image.substring( image.lastIndexOf('/') + 1 ).split('.')
+                console.log({ images, fileId, extension });
+                await cloudinary.uploader.destroy( 'fileId'  );
             }
-        })
+        });
 
-        await product.update(req.body)
+
+
+        await product.update( req.body );
         await db.disconnect();
 
-        return res.status(200).json( product )
+
+        return res.status(200).json( product );
 
     } catch (error) {
         console.log(error);
         await db.disconnect();
-
-        return res.status(400).json({ message: 'Favor de validar los logs de la consola' });
-
+        return res.status(400).json({ message: 'Revisar la consola del servidor' });
     }
+
 }
+
+
 
 const  crateProduct = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
 

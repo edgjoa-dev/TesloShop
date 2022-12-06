@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import formidable from 'formidable'
 
 import { v2 as cloudinary } from 'cloudinary'
-
 cloudinary.config( process.env.CLOUDINARY_URL ||'' );
 
 
@@ -34,9 +33,7 @@ const saveFile = async( file: formidable.File ): Promise<string> => {
     // fs.unlinkSync( file.filepath );
     // return;
 
-    const {secure_url} =  await cloudinary.uploader.upload( file.filepath, {
-        folder: 'teslo-shop'
-    } )
+    const {secure_url} =  await cloudinary.uploader.upload( file.filepath )
     console.log({secure_url});
     return secure_url;
 
