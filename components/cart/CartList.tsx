@@ -1,7 +1,7 @@
 import { ItemCounter } from '../ui';
 import NextLink from 'next/link';
 import { Box, Button, CardActionArea, CardMedia, Chip, Grid, Link, Typography } from '@mui/material';
-import { FC, useContext } from 'react';
+import {  FC, useContext } from 'react';
 import { CartContext } from '../../context';
 import { ICartProduct, IOrderItem } from '../../interfaces';
 
@@ -29,7 +29,7 @@ export const CartList:FC<Props> = ({editable = false, products}) => {
                     <Link>
                         <CardActionArea>
                             <CardMedia
-                                image={`/products/${ product.image }`}
+                                image={product.image}
                                 component="img"
                                 sx={{ borderRadius: '5px' }}
                             />
