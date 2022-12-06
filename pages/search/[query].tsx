@@ -43,37 +43,38 @@ const SearchPage: NextPage<Props> = ({ products, foundProducts, query }) => {
     )
     }
 
-export const getServerSideProps: GetServerSideProps = async ({params}) => {
-    const { query = '' } = params as { query: string }
+    export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
-    if(query.length === 0){
+        const { query = '' } = params as { query: string };
+
+        if ( query.length === 0 ) {
+            return {
+                redirect: {
+                    destination: '/',
+                    permanent: true
+                }
+            }
+        }
+
+        // y no hay productos
+        let products = await dbProducts.getProductsByTerm( query );
+        const foundProducts = products.length > 0;
+
+        // TODO: retornar otros productos
+        if ( !foundProducts ) {
+            // products = await dbProducts.getAllProducts();
+            products = await dbProducts.getProductsByTerm('shirt');
+        }
+
         return {
-            redirect: {
-                destination: '/',
-                permanent: true
+            props: {
+                products,
+                foundProducts,
+                query
             }
         }
     }
 
-    let products = await dbProducts.getProductsByTerm(query);
-    const foundProducts = products.length > 0
 
-    if(!foundProducts){
-        //products = await dbProducts.getAllProducts();
-        products = await dbProducts.getProductsByTerm('shirts');
-    }
-
-
-
-    return {
-        props: {
-            products,
-            foundProducts,
-            query
-        }
-    }
-
-
-}
 
 export default SearchPage;

@@ -13,7 +13,7 @@ export const ProductList: FC<ProductListProps> = ({ products }) => {
             {
                 products.map( product =>(
                     <ProductCard
-                        key={ product.slug }
+                        key={ product.title }
                         product={ product }
                     />
                 ))

@@ -1,16 +1,19 @@
-import { ItemCounter } from '../ui';
-import NextLink from 'next/link';
-import { Box, Button, CardActionArea, CardMedia, Chip, Grid, Link, Typography } from '@mui/material';
 import {  FC, useContext } from 'react';
+import NextLink from 'next/link';
+
 import { CartContext } from '../../context';
 import { ICartProduct, IOrderItem } from '../../interfaces';
+
+import { ItemCounter } from '../ui';
+import { Box, Button, CardActionArea, CardMedia, Chip, Grid, Link, Typography } from '@mui/material';
 
 interface Props {
     editable?: boolean;
     products?: IOrderItem[];
+    children: React.ReactNode
 }
 
-export const CartList:FC<Props> = ({editable = false, products}) => {
+export const CartList = ({editable = false, products}): React.ReactNode => {
 
     const { cart, updateCartQuantity, removeCartProduct } = useContext(CartContext)
 
