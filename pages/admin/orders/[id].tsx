@@ -55,7 +55,7 @@ return (
         <Grid container sx={{mt: 5}}>
 
             <Grid item  xs={12} sm={7}>
-                <CartList products={ order.orderItems }/>
+                <CartList products={order.orderItems} />
             </Grid>
 
             <Grid item  xs={12} sm={5}>

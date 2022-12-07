@@ -10,10 +10,9 @@ import { Box, Button, CardActionArea, CardMedia, Chip, Grid, Link, Typography } 
 interface Props  {
     editable?: boolean;
     products?: IOrderItem[];
-    children: React.ReactElement
 }
 
-export const CartList: React.FC<Props> = ({ editable= false, products }): React.ReactElement => {
+export const CartList: React.FC<Props> = ({ editable= false, products })=> {
 
     const { cart, updateCartQuantity, removeCartProduct } = useContext(CartContext)
 
@@ -77,8 +76,8 @@ export const CartList: React.FC<Props> = ({ editable= false, products }): React.
             </Grid>
         </Grid>
     ))
-            }</>
-
+    }
+    </>
             )
 
 }
