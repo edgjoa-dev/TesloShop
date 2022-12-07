@@ -7,13 +7,13 @@ import { ICartProduct, IOrderItem } from '../../interfaces';
 import { ItemCounter } from '../ui';
 import { Box, Button, CardActionArea, CardMedia, Chip, Grid, Link, Typography } from '@mui/material';
 
-interface Props {
+interface Props  {
     editable?: boolean;
     products?: IOrderItem[];
-    children: React.ReactNode
+    children: React.ReactElement
 }
 
-export const CartList = ({editable = false, products}): React.ReactNode => {
+export const CartList: React.FC<Props> = ({ editable= false, products }): React.ReactElement => {
 
     const { cart, updateCartQuantity, removeCartProduct } = useContext(CartContext)
 
@@ -25,7 +25,9 @@ export const CartList = ({editable = false, products}): React.ReactNode => {
     const productsToShow = products ? products : cart;
 
     return (
-        productsToShow.map(product => (
+        <>
+        {
+            productsToShow.map(product => (
         <Grid container spacing={2} key={product.slug + product.size} sx={{mb:1}}>
             <Grid item xs={3} sm={3}>
                 <NextLink  href={`/product/${product.slug}`} passHref>
@@ -75,6 +77,9 @@ export const CartList = ({editable = false, products}): React.ReactNode => {
             </Grid>
         </Grid>
     ))
+            }</>
+
             )
+
 }
 

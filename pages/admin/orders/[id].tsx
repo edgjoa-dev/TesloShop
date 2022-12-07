@@ -1,7 +1,6 @@
 import { GetServerSideProps, NextPage } from 'next';
 import NextLink from 'next/link';
 
-import { ShopLayout } from "../../../components/layout"
 import { Box, Card, CardContent, Chip, Divider, Grid, Link, Typography } from '@mui/material';
 import { AirplaneTicketOutlined, CreditCardOffOutlined, CreditScoreOutlined } from "@mui/icons-material";
 
