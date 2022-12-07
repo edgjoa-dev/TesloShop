@@ -5,7 +5,7 @@ type UiActionType =
    | { type: '[UI] - ToggleMenu' }
 
 
-   const uiReducer = ( state: UiState, action: UiActionType ): UiState => {
+export const uiReducer = ( state: UiState, action: UiActionType ): UiState => {
 
    switch (action.type) {
       case '[UI] - ToggleMenu':
@@ -19,5 +19,3 @@ type UiActionType =
    }
 
 }
-
-export default uiReducer
